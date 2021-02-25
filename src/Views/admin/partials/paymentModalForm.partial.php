@@ -41,6 +41,13 @@
                     </div>
                 </div>
                 <div class="SnForm-item">
+                    <label for="paymentDescription" class="SnForm-label">Descripción</label>
+                    <div class="SnControl-wrapper">
+                        <i class="fas fa-file-contract SnControl-prefix"></i>
+                        <textarea id="paymentDescription" cols="30" rows="2" class="SnForm-control SnControl"></textarea>
+                    </div>
+                </div>
+                <div class="SnForm-item">
                     <label for="paymentTotal" class="SnForm-label">Total</label>
                     <div class="SnControl-wrapper">
                         <i class="fas fa-coins SnControl-prefix"></i>

@@ -4,6 +4,8 @@
             <tr>
                 <th>Cod</th>
                 <th style="width: 50px">P</th>
+                <th>CN</th>
+                <th>Cliente</th>
                 <th>Fecha pago</th>
                 <th>Folio</th>
                 <th>Descripción</th>
@@ -16,31 +18,40 @@
             </tr>
         </thead>
         <tbody>
-            <?php if (count($parameter['payment']['data']) >= 1) : foreach ($parameter['payment']['data'] as $row) : ?>
-                <tr class="<?= $row['canceled'] == 1 ? 'disabled' : '' ?>">
-                    <td><?= $row['payment_id'] ?></td>
-                    <td>
-                        <button class="SnBtn icon jsPaymentOption" onclick="paymentPrint(<?= $row['payment_id'] ?>)">
-                            <i class="fas fa-print"></i>
-                        </button>
-                    </td>
-                    <td><?= $row['datetime_of_issue'] ?></td>
-                    <td><?= $row['reference'] ?></td>
-                    <td><?= $row['description'] ?></td>
-                    <td><?= $row['from_datetime'] ?></td>
-                    <td><?= $row['to_datetime'] ?></td>
-                    <td><?= $row['payment_count'] ?></td>
-                    <td><?= $row['total'] ?></td>
-                    <td><span class="SnTag <?= $row['canceled'] == 0 ? 'success' : 'error' ?>"><?= $row['canceled'] == 0 ? 'activo' : 'anulado' ?></span></td>
-                    <td>
-                        <div class="SnTable-action">
-                            <button class="SnBtn icon jsPaymentOption" title="Anular" onclick="paymentCanceled(<?= $row['payment_id'] ?>)" <?= $row['canceled'] == 1 ? 'disabled' : '' ?>>
-                                <i class="fas fa-ban"></i>
+            <?php if (count($parameter['payment']['data']) >= 1) : $paymentTotal = 0;
+                foreach ($parameter['payment']['data'] as $row) : $paymentTotal += ($row['canceled'] == 0 ? $row['total'] : 0 ); ?>
+                    <tr class="<?= $row['canceled'] == 1 ? 'disabled' : '' ?>">
+                        <td><?= $row['payment_id'] ?></td>
+                        <td>
+                            <button class="SnBtn icon jsPaymentOption" onclick="paymentPrint(<?= $row['payment_id'] ?>)">
+                                <i class="fas fa-print"></i>
                             </button>
-                        </div>
-                    </td>
+                        </td>
+                        <td><?= $row['contract_id'] ?></td>
+                        <td><?= $row['customer_social_reason'] ?></td>
+                        <td><?= $row['datetime_of_issue'] ?></td>
+                        <td><?= $row['reference'] ?></td>
+                        <td><?= $row['description'] ?></td>
+                        <td><?= $row['from_datetime'] ?></td>
+                        <td><?= $row['to_datetime'] ?></td>
+                        <td><?= $row['payment_count'] ?></td>
+                        <td><?= $row['total'] ?></td>
+                        <td><span class="SnTag <?= $row['canceled'] == 0 ? 'success' : 'error' ?>"><?= $row['canceled'] == 0 ? 'activo' : 'anulado' ?></span></td>
+                        <td>
+                            <div class="SnTable-action">
+                                <button class="SnBtn icon jsPaymentOption" title="Anular" onclick="paymentCanceled(<?= $row['payment_id'] ?>)" <?= $row['canceled'] == 1 ? 'disabled' : '' ?>>
+                                    <i class="fas fa-ban"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                <tr>
+                    <td colspan="10" style="text-align: right;">Total</td>
+                    <td><?= $paymentTotal ?></td>
+                    <td colspan="3"></td>
                 </tr>
-            <?php endforeach; else : ?>
+            <?php else : ?>
                 <tr>
                     <td colspan="11">
                         <div class="SnEmpty">

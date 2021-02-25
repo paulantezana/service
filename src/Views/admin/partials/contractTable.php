@@ -20,7 +20,7 @@
                     <td>
                         <span><?= $row['plan_description'] ?></span>
                         <div>
-                            <small><?= $row['plan_speed'] ?> - <?= $row['plan_price'] ?></small>
+                            <small><?= $row['plan_speed'] ?> - S/. <?= $row['plan_price'] ?></small>
                         </div>
                     </td>
                     <td><?= $row['datetime_of_issue'] ?></td>
@@ -30,9 +30,9 @@
                             <?php
                                 $months = stringDateDiffMonth($row['datetime_of_issue'], date('Y-m-d'));
                                 if($months < $row['payment_count']){
-                                    echo '<div class="SnTag success">activo - '.$row['payment_count'].'</div>';
+                                    echo '<div class="SnTag success">adelanto - '.($row['payment_count'] - $months).' meses</div>';
                                 } else {
-                                    echo '<div class="SnTag error">deuda - '.$row['payment_count'].'</div>';
+                                    echo '<div class="SnTag error">deuda - '.($months - $row['payment_count']).' meses</div>';
                                 }
                             ?>
                         <?php else: if($row['canceled'] == 0):?>
@@ -45,12 +45,10 @@
                             <button class="SnBtn icon jsContractOption" title="Pagos" onclick="paymentShowModalCreate(<?= $row['contract_id'] ?>)" <?= $row['canceled'] == 1 ? 'disabled' : '' ?>>
                                 <i class="fab fa-paypal"></i>
                             </button>
+                            <a class="SnBtn icon jsContractOption" title="Detalles" href="<?= URL_PATH ?>/admin/payment?contractId=<?= $row['contract_id'] ?>"><i class="far fa-list-alt"></i></a>
                             <button class="SnBtn icon jsContractOption" title="Anular" onclick="contractCanceled(<?= $row['contract_id'] ?>, <?= $row['contract_id'] ?>)" <?= $row['canceled'] == 1 ? 'disabled' : '' ?>>
                                 <i class="fas fa-ban"></i>
                             </button>
-                            <!-- <button class="SnBtn icon jsContractOption" title="Editar" onclick="contractShowModalUpdate(<?= $row['contract_id'] ?>)" <?= $row['canceled'] == 1 ? 'disabled' : '' ?>>
-                                <i class="fas fa-edit"></i>
-                            </button> -->
                         </div>
                     </td>
                 </tr>

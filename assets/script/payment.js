@@ -29,7 +29,7 @@ function paymentList(page = 1, limit = 10, search = "") {
   if (paymentTable) {
     SnFreeze.freeze({ selector: "#paymentTable" });
     RequestApi.fetch(
-      `/admin/payment/table?limit=${limit}&page=${page}&search=${search}`,
+      `/admin/payment/table?limit=${limit}&page=${page}&search=${search}&contractId=${currentContractId}`,
       {
         method: "GET",
       }

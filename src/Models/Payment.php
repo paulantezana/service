@@ -7,6 +7,52 @@ class Payment extends Model
         parent::__construct('payments', 'payment_id', $connection);
     }
 
+
+    public function paginate(int $page, int $limit = 20, string $search = '', int $contractId = 0)
+    {
+        try {
+            $offset = ($page - 1) * $limit;
+            $totalRows = $this->db->query('SELECT COUNT(*) FROM payments')->fetchColumn();
+            $totalPages = ceil($totalRows / $limit);
+
+            $aditionalQuery = '';
+            if ($contractId > 0) {
+                $aditionalQuery = ' WHERE pay.contract_id = :contract_id ';
+            }
+
+            $stmt = $this->db->prepare("SELECT pay.*,
+                                            cus.document_number AS customer_document_number,
+                                            cus.social_reason AS customer_social_reason,
+                                            cus.fiscal_address AS customer_fiscal_address,
+                                            cus.email AS customer_email,
+                                            cus.telephone AS customer_telephone,
+                                            user.user_name AS user_name
+                                        FROM payments AS pay
+                                        INNER JOIN contracts AS con ON pay.contract_id = con.contract_id
+                                        INNER JOIN customers AS cus ON con.customer_id = cus.customer_id
+                                        INNER JOIN users as user ON pay.user_id = user.user_id
+                                        ".$aditionalQuery." 
+                                        ORDER BY pay.payment_id DESC
+                                        LIMIT $offset, $limit");
+            if ($contractId > 0) {
+                $stmt->bindParam(":contract_id", $contractId);
+            }
+            if (!$stmt->execute()) {
+                throw new Exception($stmt->errorInfo()[2]);
+            }
+            $data = $stmt->fetchAll();
+
+            return [
+                'current' => $page,
+                'pages' => $totalPages,
+                'limit' => $limit,
+                'data' => $data,
+            ];
+        } catch (Exception $e) {
+            throw new Exception('Error en metodo : ' . __FUNCTION__ . ' | ' . $e->getMessage());
+        }
+    }
+
     public function getByIdPrint(int $id)
     {
         try {
@@ -40,7 +86,7 @@ class Payment extends Model
                 throw new Exception($stmt->errorInfo()[2]);
             }
             $data = $stmt->fetch();
-            if($data == false){
+            if ($data == false) {
                 return 0;
             }
 
@@ -94,14 +140,15 @@ class Payment extends Model
         }
     }
 
-    public function reportChart($filter){
+    public function reportChart($filter)
+    {
         $stmt = $this->db->prepare("SELECT DATE(created_at) as created_at_query, COUNT(payment_id) as count FROM payments
                                     WHERE created_at BETWEEN :start_date AND :end_date AND canceled = 0
                                     GROUP BY created_at_query");
 
         $stmt->bindParam(':start_date', $filter['startDate']);
         $stmt->bindParam(':end_date', $filter['endDate']);
-    
+
         if (!$stmt->execute()) {
             throw new Exception($stmt->errorInfo()[2]);
         }

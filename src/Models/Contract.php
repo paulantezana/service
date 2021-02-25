@@ -56,7 +56,7 @@ class Contract extends Model
                                         INNER JOIN customers AS cus ON cont.customer_id = cus.customer_id 
                                         INNER JOIN plans AS plan ON cont.plan_id = plan.plan_id 
                                         LEFT JOIN payments AS pay ON cont.contract_id = pay.contract_id AND pay.canceled = 0
-                                        WHERE cus.social_reason LIKE :search GROUP BY cont.contract_id LIMIT $offset, $limit");
+                                        WHERE cus.social_reason LIKE :search GROUP BY cont.contract_id ORDER BY cont.contract_id DESC LIMIT $offset, $limit");
             $stmt->bindValue(':search', '%' . $search . '%');
 
             if (!$stmt->execute()) {

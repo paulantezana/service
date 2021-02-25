@@ -189,7 +189,13 @@ CREATE TABLE contracts(
     created_at DATETIME,
     created_user_id INT,
     updated_user_id INT,
-    CONSTRAINT pk_contracts PRIMARY KEY (contract_id)
+    CONSTRAINT pk_contracts PRIMARY KEY (contract_id),
+    CONSTRAINT fk_contracts_plans FOREIGN KEY (plan_id) REFERENCES plans (plan_id)
+        ON UPDATE RESTRICT ON DELETE RESTRICT,
+    CONSTRAINT fk_contracts_customers FOREIGN KEY (customer_id) REFERENCES customers (customer_id)
+        ON UPDATE RESTRICT ON DELETE RESTRICT,
+    CONSTRAINT fk_contracts_users FOREIGN KEY (user_id) REFERENCES users (user_id)
+        ON UPDATE RESTRICT ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
 CREATE TABLE payments(
@@ -212,7 +218,11 @@ CREATE TABLE payments(
     created_at DATETIME,
     created_user_id INT,
     updated_user_id INT,
-    CONSTRAINT pk_payments PRIMARY KEY (payment_id)
+    CONSTRAINT pk_payments PRIMARY KEY (payment_id),
+    CONSTRAINT fk_payments_contracts FOREIGN KEY (contract_id) REFERENCES contracts (contract_id)
+        ON UPDATE RESTRICT ON DELETE RESTRICT,
+    CONSTRAINT fk_payments_users FOREIGN KEY (user_id) REFERENCES users (user_id)
+        ON UPDATE RESTRICT ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
 

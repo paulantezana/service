@@ -144,5 +144,5 @@ function stringDateDiffMonth($dt_menor, $dt_maior)
     $d1 = new DateTime($dt_menor);
     $d2 = new DateTime($dt_maior);
     $intervalMonth = $d2->diff($d1);
-    return $intervalMonth->format('%m');
+    return $intervalMonth->format('%y') * 12 + $intervalMonth->format('%m');
 }

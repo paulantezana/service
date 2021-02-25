@@ -19,7 +19,16 @@ class PaymentController extends Controller
     public function home()
     {
         try {
-            $this->render('admin/payment.view.php', [], 'layouts/admin.layout.php');
+            $contractId = $_GET['contractId'] ?? 0;
+            $contract = [];
+            if($contractId > 0){
+                $contract = $this->contractModel->getByIdDetail($contractId);
+            }
+
+            $this->render('admin/payment.view.php', [
+                'contractId' => $contractId,
+                'contract' => $contract,
+            ], 'layouts/admin.layout.php');
         } catch (Exception $e) {
             $this->render('500.view.php', [
                 'message' => $e->getMessage(),
@@ -35,8 +44,9 @@ class PaymentController extends Controller
             $page = htmlspecialchars(isset($_GET['page']) ? $_GET['page'] : 1);
             $limit = htmlspecialchars(isset($_GET['limit']) ? $_GET['limit'] : 10);
             $search = htmlspecialchars(isset($_GET['search']) ? $_GET['search'] : '');
-
-            $payment = $this->paymentModel->paginate($page, $limit, $search);
+            $contractId = htmlspecialchars(isset($_GET['contractId']) ? $_GET['contractId'] : 0);
+            
+            $payment = $this->paymentModel->paginate($page, $limit, $search, $contractId);
 
             $res->view = $this->render('admin/partials/paymentTable.php', [
                 'payment' => $payment,
@@ -100,7 +110,7 @@ class PaymentController extends Controller
             }
 
             $res->result = $this->paymentModel->insert([
-                'description'=> htmlspecialchars($body['speed'] . ' ' . $body['plan']),
+                'description'=> htmlspecialchars($body['description']),
                 'reference'=> htmlspecialchars($body['reference']),
                 'paymentCount'=> htmlspecialchars($body['paymentCount']),
                 'fromDatetime'=> htmlspecialchars($body['fromDatetime']),
@@ -207,12 +217,8 @@ class PaymentController extends Controller
                 $res->message .= 'Falta especificar el contrato | ';
                 $res->success = false;
             }
-            if (($body['plan'] ?? '') == '') {
-                $res->message .= 'Falta ingresar el plan | ';
-                $res->success = false;
-            }
-            if (($body['speed'] ?? '') == '') {
-                $res->message .= 'Falta ingresar la velocidad | ';
+            if (($body['description'] ?? '') == '') {
+                $res->message .= 'Falta ingresar la descripción | ';
                 $res->success = false;
             }
         }

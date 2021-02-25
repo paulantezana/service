@@ -111,11 +111,11 @@ function contractList(page = 1, limit = 10, search = "") {
 
 function contractClearForm() {
   let currentForm = document.getElementById("contractForm");
-  let contractDescripcion = document.getElementById("contractDescripcion");
-  if (currentForm && contractDescripcion) {
+  let contractPlanId = document.getElementById("contractPlanId");
+  if (currentForm && contractPlanId) {
     currentForm.reset();
-    contractDescripcion.focus();
-    contractDescripcion.select();
+    contractPlanId.focus();
+    // contractPlanId.select();
   }
   pValidator.reset();
 }
@@ -386,10 +386,12 @@ function paymentShowModalCreate(contractId) {
           lastPaymentInfo.innerHTML = `<strong>Ultimo pago</strong>
           <div>
               <div><strong>Descripcion:</strong><span> ${lastPayment.description}</span></div>
-              <div><strong>Fecha pago:</strong><span> ${lastPayment.datetime_of_issue}</span></div>
-              <div><strong>Rango:</strong><span> ${lastPayment.from_datetime} ${lastPayment.to_datetime}</span></div>
+              <div><strong>Fecha pago:</strong><span> ${moment(lastPayment.datetime_of_issue).format('LLLL')}</span></div>
+              <div><strong>Rango:</strong><span style="display: flex;justify-content: space-between;">desde <span class="SnTag success">${moment(lastPayment.from_datetime).format('LL')}</span> hasta <span class="SnTag success">${moment(lastPayment.to_datetime).format('LL')}</span></span></div>
           </div>`;
         }
+
+        document.getElementById('paymentDescription').innerHTML = `${contract.plan_description} - ${contract.plan_speed}`;
 
         paymentCountChange();
       } else {
@@ -423,10 +425,9 @@ function paymentSubmit(e) {
   paymentSendData.paymentCount = document.getElementById("paymentCount").value;
   paymentSendData.fromDatetime = document.getElementById("paymentFromDatetime").value;
   paymentSendData.toDatetime = document.getElementById("paymentToDatetime").value;
+  paymentSendData.description = document.getElementById("paymentDescription").value;
   paymentSendData.total = document.getElementById("paymentTotal").value;
   paymentSendData.contractId = currentContractId;
-  paymentSendData.plan = 10;
-  paymentSendData.speed = 10;
 
   if (paymentState.modalType === "update") {
     paymentSendData.paymentId = document.getElementById("paymentId").value || 0;

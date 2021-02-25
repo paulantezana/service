@@ -15,6 +15,24 @@
             </div>
         </div>
     </div>
+    <?php if($parameter['contractId']>0): ?>
+        <div class="SnCard SnMb-2">
+            <div class="SnCard-body">
+                <div>
+                    <span>Contrato: </span><span><?= $parameter['contract']['contract_id'] ?></span>
+                </div>
+                <div>
+                    <span>Plan: </span><span><?= $parameter['contract']['plan_description'] ?></span>
+                </div>
+                <div>
+                    <span>Velocidad: </span><span><?= $parameter['contract']['plan_speed'] ?></span>
+                </div>
+                <div>
+                    <span>Precio: </span><span><?= $parameter['contract']['plan_price'] ?></span>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
     <div class="SnCard">
         <div class="SnCard-body">
             <div class="SnControl-wrapper SnMb-5">
@@ -26,6 +44,9 @@
     </div>
 </div>
 
+<script>
+    var currentContractId = <?= $parameter['contractId'] ?>;
+</script>
 <script src="<?= URL_PATH ?>/assets/script/helpers/jspdf.min.js"></script>
 <script src="<?= URL_PATH ?>/assets/script/paymentPrint.js"></script>
 <script src="<?= URL_PATH ?>/assets/script/payment.js"></script>
