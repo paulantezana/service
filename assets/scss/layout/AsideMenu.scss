@@ -7,6 +7,7 @@ $asideFooterHeight: 32px;
   height: calc(100vh - #{$headerHeight + $asideFooterHeight});
   overflow-y: auto;
   &-container {
+    background: var(--snColorBgAlt);
     color: var(--snColorText);
     border-right: 1px solid $menuBorderColor;
     // box-shadow: 0 1px 2px rgba(0, 0, 0, 0.14);

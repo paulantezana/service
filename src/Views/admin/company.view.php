@@ -1,6 +1,6 @@
 <div class="SnContent">
-    <div class="SnGrid col-gap row-gap s-grid-4">
-        <div class="s-col-3">
+    <div class="SnGrid col-gap row-gap m-grid-4">
+        <div class="m-col-3">
             <form action="" class="SnForm" novalidate id="companyForm" onsubmit="companySubmit(event)">
                 <input type="hidden" class="SnForm-control" id="companyId" value="<?= $parameter['company']['company_id'] ?>">
                 <div class="SnForm-item required">
@@ -64,7 +64,7 @@
             <div class="SnUpload-warapper" id="companyLogoSquareWrapper">
                 <?php if ($parameter['company']['logo']): ?>
                     <div class="SnMb-5">
-                        <img src="<?php echo URL_PATH . '/' .  ($parameter['company']['logo'] ?? '') ?>" alt="logo cuadrado" style="width: 100%; display: block;">
+                        <img src="<?php echo URL_PATH . ($parameter['company']['logo'] ?? '') ?>" alt="logo cuadrado" style="width: 100%; display: block;">
                     </div>
                 <?php endif; ?>
                 <div class="SnForm-item">
@@ -76,7 +76,7 @@
             <div class="SnUpload-warapper" id="companyLogoLargeWrapper">
                 <?php if ($parameter['company']['logo_large']): ?>
                     <div class="SnMb-5">
-                        <img src="<?php echo URL_PATH . '/' .  ($parameter['company']['logo_large'] ?? '') ?>" alt="logo cuadrado" style="width: 100% display: block;">
+                        <img src="<?php echo URL_PATH . ($parameter['company']['logo_large'] ?? '') ?>" alt="logo cuadrado" style="width: 100% display: block;">
                     </div>
                 <?php endif; ?>
                 <div class="SnForm-item">

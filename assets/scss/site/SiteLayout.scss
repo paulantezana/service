@@ -4,6 +4,8 @@
     grid-template-areas: "layoutHeader"
                           "layoutMain"
                           "layoutFooter";
+    // background: linear-gradient(45deg, #052C48 50%, #0C4C69 50%);
+    min-height: 100vh;
     // @include from(l){
     //     grid-template-columns: 420px 1fr;
     //     grid-template-areas: "layoutHeader layoutMain"

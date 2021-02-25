@@ -31,7 +31,7 @@
                     <div class="Branding" itemscope itemtype="http://schema.org/Organization">
                         <a class="Branding-link" href="<?= URL_PATH ?>" itemprop="url">
                             <img class="Branding-logo" alt="Logotipo de Sedna" itemprop="logo" src="<?= URL_PATH ?>/assets/images/icon/144.png">
-                            <span class="Branding-name">Sedna</span>
+                            <span class="Branding-name"><?= APP_NAME ?></span>
                         </a>
                     </div>
                 </div>

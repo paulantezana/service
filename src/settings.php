@@ -37,7 +37,7 @@ define('APP_AUTHOR','paulantezana');
 define('APP_DESCRIPTION','Control de pagos');
 define('APP_EMAIL','paulantezana.2@gmail.com');
 
-define('APP_DEV',false);
+define('APP_DEV',true);
 
 define('FILE_PATH', '/files');
 
