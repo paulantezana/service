@@ -1,0 +1,13 @@
+.SnList{
+    li{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: .3rem;
+        border-radius: $borderRadiusBase;
+        &.active{
+            // border-left: 2px solid var(--snColor1);
+            background: var(--snColorHover);
+        }
+    }
+}

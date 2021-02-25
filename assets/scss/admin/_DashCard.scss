@@ -1,0 +1,50 @@
+.DashCard{
+    // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.10);
+    // border: 0;
+    margin-bottom: 1rem;
+    &-body{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &-right{
+        text-align: right;
+    }
+    &-icon{
+        width: 48px;
+        height: 48px;
+        // line-height: 48px;
+
+        background-color: #358ED7;
+        color: white;
+        font-size: 1.1rem;
+        
+        border-radius: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    &-number{
+        font-size: 2rem;
+        line-height: 1em;
+        font-weight: 300;
+    }
+    &.green,
+    &.purple,
+    &.blue{
+        color: white;
+        .DashCard-icon{
+            background-color: rgba(0, 20, 35, 0.07);
+            font-size: 1.1rem;
+        }
+    }
+    &.green{
+        background: #7DC855;
+    }
+    &.purple{
+        background: #838CC7;
+    }
+    &.blue{
+        background: #358ED7;
+    }
+}

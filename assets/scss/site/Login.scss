@@ -1,0 +1,21 @@
+.Login{
+  width: 350px;
+  max-width: 100%;
+  margin: auto;
+  padding: 1rem;
+  @include from(l){
+    width: 320px;
+  }
+  a{
+    text-decoration: none;
+    color: var(--snColor1);
+  }
+  .SnForm-input{
+      background: var(--snColorBgAlt);
+  }
+  &-flex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}

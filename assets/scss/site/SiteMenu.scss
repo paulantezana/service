@@ -1,0 +1,128 @@
+// Estilos generales
+.SiteMenu {
+  @extend %snList;
+  a {
+    font-family: "Open Sans", sans-serif;
+    display: block;
+    padding: 0 12px;
+    line-height: 2.25rem;
+    height: 2.25rem;
+    font-weight: 400;
+    &.is-toggle {
+      display: flex;
+      justify-content: space-between;
+      padding-right: 0;
+    }
+    [class*="icon-"]:before{
+        position: relative;
+        top: 2px;
+    }
+  }
+}
+
+// Estilos en el menu mobile
+.SiteMenu {
+  @include to(l) {
+    &-wrapper {
+      background: rgba(black, 0.5);
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      z-index: 9999;
+      left: -100vw;
+      top: 0;
+    }
+    &-content {
+      width: 220px;
+      background: var(--snColorBg);
+      height: 100vh;
+    }
+    a {
+      color: var(--snColorText);
+      padding: 0 12px;
+      &:hover {
+        background: var(--snColorHover);
+      }
+    }
+  }
+}
+
+// Cuando se a
+.SiteMenu-is-show {
+  .SiteMenu-wrapper {
+    left: 0;
+  }
+}
+
+// Estilos en el escritorio
+.SiteMenu {
+  @include from(l) {
+    &-content {
+      display: flex;
+      align-items: center;
+    }
+
+    // Active
+    li.is-active {
+      & > a {
+        color: var(--snColor1);
+      }
+    }
+
+    // Level 1
+    & > li {
+      & > a {
+        line-height: $siteHeaderHeight;
+        height: $siteHeaderHeight;
+        &:hover {
+          color: var(--snColor1);
+        }
+      }
+      &.is-active {
+        position: relative;
+        // &::before {
+        //   content: "";
+        //   position: absolute;
+        //   bottom: 0;
+        //   left: 50%;
+        //   transform: translateX(-50%);
+        //   width: 14px;
+        //   height: 5px;
+        //   border-bottom: 5px solid var(--snColor1);
+        //   border-right: 7px solid transparent;
+        //   border-left: 7px solid transparent;
+        // }
+      }
+    }
+
+    // Sub menu
+    li ul {
+      background: var(--snColorBgAlt);
+      min-width: 230px;
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      right: 0;
+
+      border-top: 2px solid var(--snColor1);
+      border-bottom-right-radius: 5px;
+      border-bottom-left-radius: 5px;
+      box-shadow: 0 8px 20px rgba(55, 125, 255, 0.075);
+
+      a {
+        &:hover {
+          background: var(--snColorHover);
+          color: var(--snColor1);
+        }
+      }
+    }
+  }
+}
+
+// Primary Menu - toggle
+#SiteMenu-toggle {
+  font-size: 1.4rem;
+  cursor: pointer;
+  @include from(l) {
+    display: none;
+  }
+}

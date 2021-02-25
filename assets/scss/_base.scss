@@ -1,0 +1,17 @@
+body{
+  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 0.90rem;
+  line-height: 1.5384616;
+  //background: #EFF3F6;
+  background: var(--snColorBg);
+}
+
+img,
+video{
+  display: block;
+}
+
+.disabled{
+  text-decoration: line-through;
+  color: var(--snColorTextAlt);
+}

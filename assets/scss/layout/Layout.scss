@@ -1,0 +1,84 @@
+$asideWidth: 220px;
+$asideSmallWidth: 64px;
+$headerHeight: 56px;
+
+// General Styles
+.AdminLayout{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas: "layoutHeader"
+                        "layoutMain"
+                        "layoutAside";
+  // background: var(--snColorDarker);
+  @include from(l){
+    grid-template-columns: $asideWidth 1fr;
+    grid-template-areas: "layoutAside layoutHeader"
+                          "layoutAside layoutMain";
+  }
+  &-header{
+    line-height: $headerHeight;
+    grid-area: layoutHeader;
+  }
+  &-main{
+    height: calc(100vh - #{$headerHeight + 1});
+    overflow-y: auto;
+    grid-area: layoutMain;
+    // @include from(l){
+      //   border-radius: 0 0 0 18px;
+      // }
+    }
+  &-aside{
+    background: var(--snColorBgAlt);
+    @include to(l){
+      position: fixed;
+      top: 0;
+      left: -100%;
+      z-index: 110;
+      width: 100%;
+    }
+    height: 100vh;
+    grid-area: layoutAside;
+    i{
+      line-height: inherit;
+    }
+  }
+  &.AsideMenu-is-show{
+    @include to(l){
+      .AdminLayout-aside{
+        left: 0;
+      }
+    }
+  }
+}
+
+.SnContent{
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  @include from(l){
+    padding: 1rem;
+  }
+}
+
+.SnContentAside{
+  @include from(l){
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    padding: 1rem;
+    grid-gap: 1rem;
+  }
+}
+
+// Breacpoint
+// .AdminLayout{
+//   &-aside{
+//     @include from(l){
+//       background: var(--snColorBgAlt);
+//       width: $asideSmallWidth;
+//       transition: width .2s;
+//       &:hover{
+//         // background: red;
+//         width: $asideWidth;
+//       }
+//     }
+//   }
+// }

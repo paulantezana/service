@@ -1,0 +1,45 @@
+.SnDropdown{
+    position: relative;
+    outline: none;
+    display: inline-block;
+    // &-toggle{
+    //   width: 100%;
+    // }
+    &-list{
+      @extend %snList;
+      position: absolute;
+      top: calc(100% + 2px);
+      right: 0;
+      z-index: 2;
+      background: var(--snColorBgAlt);
+      padding: 4px 0;
+      text-align: left;
+      background-clip: padding-box;
+      border-radius: 4px;
+      outline: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      display: none;
+      min-width: 200px;
+      &.show{
+        display: block;
+      }
+    }
+    &-item{
+      margin: 0;
+      padding: 5px 12px;
+      font-weight: normal;
+      line-height: 22px;
+      display: block;
+      // white-space: nowrap;
+      cursor: pointer;
+      // transition: all 0.3s;
+      &:hover{
+        background: var(--snColorHover);
+      }
+    }
+    &-item,
+    &-item a{
+      text-decoration: none;
+      color: var(--snColorText);
+    }
+  }

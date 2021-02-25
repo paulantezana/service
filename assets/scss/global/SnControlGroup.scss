@@ -1,0 +1,54 @@
+@mixin SnControlGroup($otherClass: '') {
+    .#{$classPrefix}ControlGroup{
+        display: flex;
+        &-prepend{
+            display: flex;
+            .#{$classPrefix}Btn{
+                display: block;
+                border-radius: 0;
+                &:first-child {
+                    border-top-left-radius: $borderRadiusBase;
+                    border-bottom-left-radius: $borderRadiusBase;
+                }
+            }
+        }
+        &-input{
+            flex: 1 1 auto;
+            &:not(:first-child){
+                .#{$classPrefix}Form-control{
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                }
+                @if $otherClass != '' {
+                    #{$otherClass}{
+                        border-top-left-radius: 0;
+                        border-bottom-left-radius: 0;
+                    }
+                }
+            }
+            &:not(:last-child){
+                .#{$classPrefix}Form-control{
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                }
+                @if $otherClass != '' {
+                    #{$otherClass}{
+                        border-top-right-radius: 0;
+                        border-bottom-right-radius: 0;
+                    }
+                }
+            }
+        }
+        &-append{
+            display: flex;
+            .#{$classPrefix}Btn{
+                display: block;
+                border-radius: 0;
+                &:last-child {
+                    border-top-right-radius: $borderRadiusBase;
+                    border-bottom-right-radius: $borderRadiusBase;
+                }
+            }
+        }
+    }
+}

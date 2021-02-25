@@ -1,0 +1,13 @@
+.SnBadge{
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    vertical-align: middle;
+    border-radius: 50%;
+    &.success{
+        background: var(--snSuccess);
+    }
+    &.error{
+        background: var(--snError);
+    }
+}
