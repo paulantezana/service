@@ -1,38 +1,22 @@
 <?php
 
-require_once MODEL_PATH . '/Contract.php';
-require_once MODEL_PATH . '/Plan.php';
 require_once MODEL_PATH . '/Server.php';
-require_once MODEL_PATH . '/IdentityDocumentType.php';
 
-class ContractController extends Controller
+class ServerController extends Controller
 {
     protected $connection;
-    protected $contractModel;
+    protected $serverModel;
 
     public function __construct(PDO $connection)
     {
         $this->connection = $connection;
-        $this->contractModel = new Contract($connection);
+        $this->serverModel = new Server($connection);
     }
 
     public function home()
     {
         try {
-            $planModel = new Plan($this->connection);
-            $plan = $planModel->getAll();
-
-            $serverModel = new Server($this->connection);
-            $server = $serverModel->getAll();
-
-            $identityDocumentTypeModel = new IdentityDocumentType($this->connection);
-            $identityDocumentType = $identityDocumentTypeModel->getAll();
-
-            $this->render('admin/contract.view.php', [
-                'server' => $server,
-                'plan' => $plan,
-                'identityDocumentType' => $identityDocumentType,
-            ], 'layouts/admin.layout.php');
+            $this->render('admin/server.view.php', [], 'layouts/admin.layout.php');
         } catch (Exception $e) {
             $this->render('500.view.php', [
                 'message' => $e->getMessage(),
@@ -49,10 +33,10 @@ class ContractController extends Controller
             $limit = htmlspecialchars(isset($_GET['limit']) ? $_GET['limit'] : 20);
             $search = htmlspecialchars(isset($_GET['search']) ? $_GET['search'] : '');
 
-            $contract = $this->contractModel->paginate($page, $limit, $search);
+            $server = $this->serverModel->paginate($page, $limit, $search);
 
-            $res->view = $this->render('admin/partials/contractTable.php', [
-                'contract' => $contract,
+            $res->view = $this->render('admin/partials/serverTable.php', [
+                'server' => $server,
             ], '', true);
             $res->success = true;
         } catch (Exception $e) {
@@ -69,7 +53,7 @@ class ContractController extends Controller
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 
-            $res->result = $this->contractModel->getById($body['contractId']);
+            $res->result = $this->serverModel->getById($body['serverId']);
             $res->success = true;
         } catch (Exception $e) {
             $res->message = $e->getMessage();
@@ -77,25 +61,6 @@ class ContractController extends Controller
         echo json_encode($res);
     }
 
-    public function searchByCustomer()
-    {
-        $res = new Result();
-        try {
-            // authorization($this->connection, 'cliente', 'modificar');
-            $postData = file_get_contents('php://input');
-            $body = json_decode($postData, true);
-
-            $contract = $this->contractModel->searchByCustomer($body['search']);
-
-            $res->view = $this->render('admin/partials/searchByCustomer.php', [
-                'contract' => $contract,
-            ], '', true);
-            $res->success = true;
-        } catch (Exception $e) {
-            $res->message = $e->getMessage();
-        }
-        echo json_encode($res);
-    }
 
     public function create()
     {
@@ -110,14 +75,9 @@ class ContractController extends Controller
                 throw new Exception($validate->message);
             }
 
-            $res->result = $this->contractModel->insert([
-                'datetimeOfIssue'=> htmlspecialchars($body['datetimeOfIssue']),
-                'datetimeOfDue'=> htmlspecialchars($body['datetimeOfDue']),
-                'datetimeOfDueEnable'=> htmlspecialchars($body['datetimeOfDueEnable']),
-                'observation'=> htmlspecialchars($body['observation']),
-                'customerId'=> htmlspecialchars($body['customerId']),
-                'planId'=> htmlspecialchars($body['planId']),
-                'serverId'=> htmlspecialchars($body['serverId']),
+            $res->result = $this->serverModel->insert([
+                'description'=> htmlspecialchars($body['description']),
+                'address'=> htmlspecialchars($body['address']),
             ], $_SESSION[SESS_KEY]);
             $res->success = true;
             $res->message = 'El registro se inserto exitosamente';
@@ -141,14 +101,9 @@ class ContractController extends Controller
             }
 
             $currentDate = date('Y-m-d H:i:s');
-            $this->contractModel->updateById($body['contractId'], [
-                'datetimeOfIssue'=> htmlspecialchars($body['datetimeOfIssue']),
-                'datetimeOfDue'=> htmlspecialchars($body['datetimeOfDue']),
-                'datetimeOfDueEnable'=> htmlspecialchars($body['datetimeOfDueEnable']),
-                'observation'=> htmlspecialchars($body['observation']),
-                'customerId'=> htmlspecialchars($body['customerId']),
-                'planId'=> htmlspecialchars($body['planId']),
-                'serverId'=> htmlspecialchars($body['serverId']),
+            $this->serverModel->updateById($body['serverId'], [
+                'description'=> htmlspecialchars($body['description']),
+                'address'=> htmlspecialchars($body['address']),
 
                 'updated_at' => $currentDate,
                 'updated_user_id' => $_SESSION[SESS_KEY],
@@ -162,7 +117,7 @@ class ContractController extends Controller
         echo json_encode($res);
     }
 
-    public function canceled()
+    public function delete()
     {
         $res = new Result();
         try {
@@ -171,8 +126,8 @@ class ContractController extends Controller
             $body = json_decode($postData, true);
 
             $currentDate = date('Y-m-d H:i:s');
-            $this->contractModel->updateById($body['contractId'], [
-                'canceled'=> 1,
+            $this->serverModel->updateById($body['serverId'], [
+                'state'=> 0,
 
                 'updated_at' => $currentDate,
                 'updated_user_id' => $_SESSION[SESS_KEY],
@@ -192,30 +147,15 @@ class ContractController extends Controller
         $res->success = true;
 
         if ($type == 'create' || $type == 'update') {
-            if (($body['customerId'] ?? '') == '') {
-                $res->message .= 'Falta especificar el cliente | ';
-                $res->success = false;
-            }
-
-            if (($body['planId'] ?? '') == '') {
-                $res->message .= 'Falta especificar el plan | ';
-                $res->success = false;
-            }
-
-            if (($body['serverId'] ?? '') == '') {
-                $res->message .= 'Falta especificar el servidor | ';
-                $res->success = false;
-            }
-
-            if (($body['datetimeOfIssue'] ?? '') == '') {
-                $res->message .= 'Falta espeficiar la fecha de contrato | ';
+            if (($body['description'] ?? '') == '') {
+                $res->message .= 'Falta ingresar la descripción | ';
                 $res->success = false;
             }
         }
 
         if ($type == 'update') {
-            if (($body['contractId'] ?? '') == '') {
-                $res->message .= 'Falta ingresar el id del contract | ';
+            if (($body['serverId'] ?? '') == '') {
+                $res->message .= 'Falta ingresar el id del server | ';
                 $res->success = false;
             }
         }

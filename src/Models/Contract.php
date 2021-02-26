@@ -23,6 +23,29 @@ class Contract extends Model
         }
     }
 
+    public function searchByCustomer(string $search)
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT cont.*,
+                                                    cus.social_reason AS customer_social_reason,
+                                                    plan.description AS plan_description, plan.speed AS plan_speed, plan.price AS plan_price,
+                                                    SUM(IFNULL(pay.payment_count,0)) as payment_count
+                                            FROM contracts AS cont
+                                            INNER JOIN customers AS cus ON cont.customer_id = cus.customer_id 
+                                            INNER JOIN plans AS plan ON cont.plan_id = plan.plan_id 
+                                            LEFT JOIN payments AS pay ON cont.contract_id = pay.contract_id AND pay.canceled = 0
+                                            WHERE cont.canceled = 0 AND (cus.social_reason LIKE :search OR cus.document_number LIKE :search)
+                                            GROUP BY cont.contract_id ORDER BY cont.contract_id DESC LIMIT 5");
+            $stmt->bindValue(':search', '%' . $search . '%');
+            if (!$stmt->execute()) {
+                throw new Exception($stmt->errorInfo()[2]);
+            }
+            return $stmt->fetchAll();
+        } catch (Exception $e) {
+            throw new Exception('Error en metodo : ' . __FUNCTION__ . ' | ' . $e->getMessage());
+        }
+    }
+
     public function getByIdDetail(int $id)
     {
         try {
@@ -51,10 +74,12 @@ class Contract extends Model
             $stmt = $this->db->prepare("SELECT cont.*,
                                                 cus.social_reason AS customer_social_reason,
                                                 plan.description AS plan_description, plan.speed AS plan_speed, plan.price AS plan_price,
+                                                users.user_name,
                                                 SUM(IFNULL(pay.payment_count,0)) as payment_count
                                         FROM contracts AS cont
                                         INNER JOIN customers AS cus ON cont.customer_id = cus.customer_id 
                                         INNER JOIN plans AS plan ON cont.plan_id = plan.plan_id 
+                                        INNER JOIN users ON cont.user_id = users.user_id 
                                         LEFT JOIN payments AS pay ON cont.contract_id = pay.contract_id AND pay.canceled = 0
                                         WHERE cus.social_reason LIKE :search GROUP BY cont.contract_id ORDER BY cont.contract_id DESC LIMIT $offset, $limit");
             $stmt->bindValue(':search', '%' . $search . '%');
@@ -80,14 +105,15 @@ class Contract extends Model
     {
         try {
             $currentDate = date('Y-m-d H:i:s');
-            $stmt = $this->db->prepare('INSERT INTO contracts (datetime_of_issue, datetime_of_due, datetime_of_due_enable, observation, plan_id, customer_id, user_id, created_at, created_user_id)
-                                                    VALUES (:datetime_of_issue, :datetime_of_due, :datetime_of_due_enable, :observation, :plan_id, :customer_id, :user_id, :created_at, :created_user_id)');
+            $stmt = $this->db->prepare('INSERT INTO contracts (datetime_of_issue, datetime_of_due, datetime_of_due_enable, observation, plan_id, server_id, customer_id, user_id, created_at, created_user_id)
+                                                    VALUES (:datetime_of_issue, :datetime_of_due, :datetime_of_due_enable, :observation, :plan_id, :server_id, :customer_id, :user_id, :created_at, :created_user_id)');
 
             $stmt->bindValue(':datetime_of_issue', $contract['datetimeOfIssue']);
             $stmt->bindValue(':datetime_of_due', $contract['datetimeOfDue']);
             $stmt->bindValue(':datetime_of_due_enable', $contract['datetimeOfDueEnable']);
             $stmt->bindValue(':observation', $contract['observation']);
             $stmt->bindParam(':plan_id', $contract['planId']);
+            $stmt->bindParam(':server_id', $contract['serverId']);
             $stmt->bindParam(':customer_id', $contract['customerId']);
             $stmt->bindParam(':user_id', $userId);
 

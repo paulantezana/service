@@ -9,6 +9,7 @@
                 <th>Hasta</th>
                 <th>Estado</th>
                 <th>Observacion</th>
+                <th>Usuario</th>
                 <th style="width: 100px"></th>
             </tr>
         </thead>
@@ -40,12 +41,13 @@
                         <?php endif; endif; ?>
                     </td>
                     <td><?= $row['observation'] ?></td>
+                    <td><?= $row['user_name'] ?></td>
                     <td>
                         <div class="SnTable-action">
                             <button class="SnBtn icon jsContractOption" title="Pagos" onclick="paymentShowModalCreate(<?= $row['contract_id'] ?>)" <?= $row['canceled'] == 1 ? 'disabled' : '' ?>>
                                 <i class="fab fa-paypal"></i>
                             </button>
-                            <a class="SnBtn icon jsContractOption" title="Detalles" href="<?= URL_PATH ?>/admin/payment?contractId=<?= $row['contract_id'] ?>"><i class="far fa-list-alt"></i></a>
+                            <a class="SnBtn icon jsContractOption" title="Detalles" href="<?= URL_PATH ?>/admin/payment/report?contractId=<?= $row['contract_id'] ?>"><i class="far fa-list-alt"></i></a>
                             <button class="SnBtn icon jsContractOption" title="Anular" onclick="contractCanceled(<?= $row['contract_id'] ?>, <?= $row['contract_id'] ?>)" <?= $row['canceled'] == 1 ? 'disabled' : '' ?>>
                                 <i class="fas fa-ban"></i>
                             </button>

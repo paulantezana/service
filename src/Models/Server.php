@@ -1,16 +1,16 @@
 <?php
 
-class Plan extends Model
+class Server extends Model
 {
     public function __construct(PDO $connection)
     {
-        parent::__construct('plans', 'plan_id', $connection);
+        parent::__construct('servers', 'server_id', $connection);
     }
 
     public function count()
     {
         try {
-            $stmt = $this->db->prepare("SELECT COUNT(*) as total FROM plans WHERE state = 1");
+            $stmt = $this->db->prepare("SELECT COUNT(*) as total FROM servers WHERE state = 1");
             if (!$stmt->execute()) {
                 throw new Exception($stmt->errorInfo()[2]);
             }
@@ -28,7 +28,7 @@ class Plan extends Model
     public function getAll()
     {
         try {
-            $stmt = $this->db->prepare('SELECT * FROM plans WHERE state = 1');
+            $stmt = $this->db->prepare('SELECT * FROM servers WHERE state = 1');
             if (!$stmt->execute()) {
                 throw new Exception($stmt->errorInfo()[2]);
             }
@@ -42,10 +42,10 @@ class Plan extends Model
     {
         try {
             $offset = ($page - 1) * $limit;
-            $totalRows = $this->db->query('SELECT COUNT(*) FROM plans')->fetchColumn();
+            $totalRows = $this->db->query('SELECT COUNT(*) FROM servers')->fetchColumn();
             $totalPages = ceil($totalRows / $limit);
 
-            $stmt = $this->db->prepare("SELECT * FROM plans WHERE state = 1 LIMIT $offset, $limit");
+            $stmt = $this->db->prepare("SELECT * FROM servers WHERE state = 1 LIMIT $offset, $limit");
 
             if (!$stmt->execute()) {
                 throw new Exception($stmt->errorInfo()[2]);
@@ -63,16 +63,15 @@ class Plan extends Model
         }
     }
 
-    public function insert(array $plan, int $userId)
+    public function insert(array $server, int $userId)
     {
         try {
             $currentDate = date('Y-m-d H:i:s');
-            $stmt = $this->db->prepare('INSERT INTO plans (description, speed, price, created_at, created_user_id)
-                                                    VALUES (:description, :speed, :price, :created_at, :created_user_id)');
+            $stmt = $this->db->prepare('INSERT INTO servers (description, address, created_at, created_user_id)
+                                                    VALUES (:description, :address, :created_at, :created_user_id)');
 
-            $stmt->bindValue(':description', $plan['description']);
-            $stmt->bindValue(':speed', $plan['speed']);
-            $stmt->bindValue(':price', $plan['price']);
+            $stmt->bindValue(':description', $server['description']);
+            $stmt->bindValue(':address', $server['address']);
 
             $stmt->bindParam(':created_at', $currentDate);
             $stmt->bindParam(':created_user_id', $userId);

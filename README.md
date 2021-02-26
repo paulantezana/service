@@ -4,3 +4,6 @@ PHP MVC Es un témplate para iniciar proyectos PHP usando la arquitectura MVC
 ```bash
 vendor/bin/phpunit
 ```
+
+# Servidores
+. seleccionar servidores CRUD = planes

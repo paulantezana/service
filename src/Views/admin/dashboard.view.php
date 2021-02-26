@@ -5,7 +5,7 @@
                 <div class="DashCard-icon"><i class="far fa-address-book"></i></div>
                 <div class="DashCard-right">
                     <div class="DashCard-title">Clientes</div>
-                    <div class="DashCard-number"><?= $parameter['userCount'] ?></div>
+                    <div class="DashCard-number"><?= $parameter['customerCount'] ?></div>
                 </div>
             </div>
         </div>

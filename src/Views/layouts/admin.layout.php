@@ -15,7 +15,9 @@
     <link rel="stylesheet" href="<?= URL_PATH ?>/assets/css/fontawesome.css">
     <link rel="stylesheet" href="<?= URL_PATH ?>/assets/css/slimselect.css">
 
-    <script>var URL_PATH = '<?= URL_PATH ?>';</script>
+    <script>
+        var URL_PATH = '<?= URL_PATH ?>';
+    </script>
     <script src="<?= URL_PATH ?>/assets/script/helpers/sedna.js"></script>
     <script src="<?= URL_PATH ?>/assets/script/helpers/theme.js"></script>
     <script src="<?= URL_PATH ?>/assets/script/helpers/pristine.min.js"></script>
@@ -143,24 +145,39 @@
                         <?php endif; ?>
                         <?php if (menuIsAuthorized('home')) : ?>
                             <li>
+                                <a href="<?= URL_PATH ?>/admin/payment"><i class="fas fa-credit-card AsideMenu-icon"></i><span>Pagar cuota</span> </a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (menuIsAuthorized('home')) : ?>
+                            <li>
                                 <a href="<?= URL_PATH ?>/admin/contract"><i class="fas fa-file-contract AsideMenu-icon"></i><span>Contratos</span> </a>
                             </li>
                         <?php endif; ?>
                         <?php if (menuIsAuthorized('home')) : ?>
                             <li>
-                                <a href="<?= URL_PATH ?>/admin/plan"><i class="fas fa-network-wired AsideMenu-icon"></i><span>Planes</span> </a>
+                                <a href="<?= URL_PATH ?>/admin/payment/report"><i class="fab fa-paypal AsideMenu-icon"></i><span>Pagos</span> </a>
                             </li>
                         <?php endif; ?>
-                        <?php if (menuIsAuthorized('home')) : ?>
-                            <li>
-                                <a href="<?= URL_PATH ?>/admin/payment"><i class="fab fa-paypal AsideMenu-icon"></i><span>Pagos</span> </a>
-                            </li>
-                        <?php endif; ?>
-                        <?php if (menuIsAuthorized('home')) : ?>
-                            <li>
-                                <a href="<?= URL_PATH ?>/admin/customer"><i class="far fa-address-book AsideMenu-icon"></i><span>Clientes</span> </a>
-                            </li>
-                        <?php endif; ?>
+                        <li>
+                            <a href="#"><i class="fas fa-toolbox AsideMenu-icon"></i><span>Mantenimiento</span></a>
+                            <ul>
+                                <?php if (menuIsAuthorized('home')) : ?>
+                                    <li>
+                                        <a href="<?= URL_PATH ?>/admin/server"><i class="fas fa-server AsideMenu-icon"></i><span>Servidores</span> </a>
+                                    </li>
+                                <?php endif; ?>
+                                <?php if (menuIsAuthorized('home')) : ?>
+                                    <li>
+                                        <a href="<?= URL_PATH ?>/admin/plan"><i class="fas fa-network-wired AsideMenu-icon"></i><span>Planes</span> </a>
+                                    </li>
+                                <?php endif; ?>
+                                <?php if (menuIsAuthorized('home')) : ?>
+                                    <li>
+                                        <a href="<?= URL_PATH ?>/admin/customer"><i class="far fa-address-book AsideMenu-icon"></i><span>Clientes</span> </a>
+                                    </li>
+                                <?php endif; ?>
+                            </ul>
+                        </li>
                         <li>
                             <a href="#"><i class="fas fa-cog AsideMenu-icon"></i><span>Configuración</span></a>
                             <ul>
@@ -177,12 +194,6 @@
                                 <?php if (menuIsAuthorized('rol')) : ?>
                                     <li>
                                         <a href="<?= URL_PATH ?>/admin/appAuthorization"><i class="fas fa-user-tag AsideMenu-icon"></i><span>Roles</span></a>
-                                    </li>
-                                <?php endif; ?>
-                                
-                                <?php if (menuIsAuthorized('rol')) : ?>
-                                    <li>
-                                        <a href="<?= URL_PATH ?>/admin/company/backoup"><i class="fas fa-server AsideMenu-icon"></i><span>Backoup</span></a>
                                     </li>
                                 <?php endif; ?>
                             </ul>

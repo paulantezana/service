@@ -31,6 +31,7 @@
 
 <script src="<?= URL_PATH ?>/assets/script/helpers/jspdf.min.js"></script>
 <script src="<?= URL_PATH ?>/assets/script/helpers/moment.js"></script>
+<script src="<?= URL_PATH ?>/assets/script/paymentPay.js"></script>
 <script src="<?= URL_PATH ?>/assets/script/paymentPrint.js"></script>
 <script src="<?= URL_PATH ?>/assets/script/contract.js"></script>
 
@@ -66,13 +67,22 @@
                     </select>
                 </div>
                 <div class="SnForm-item required">
+                    <label for="contractServerId" class="SnForm-label">Servidor</label>
+                    <select id="contractServerId" class="SnForm-control" required>
+                        <option value="">Seleccionar</option>
+                        <?php foreach ($parameter['server'] ?? [] as $row) : ?>
+                            <option value="<?= $row['server_id'] ?>"><?= $row['description'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="SnForm-item required">
                     <label for="contractDateTimeStart" class="SnForm-label">Fecha inicio</label>
                     <div class="SnControl-wrapper">
                         <i class="far fa-calendar-alt SnControl-prefix"></i>
                         <input type="date" class="SnForm-control SnControl" id="contractDateTimeStart" value="<?= date('Y-m-d') ?>" required>
                     </div>
                 </div>
-                <div class="SnGrid s-grid-5 col-gap">
+                <div class="SnGrid s-grid-5 col-gap" style="display: none;">
                     <div class="SnForm-item s-col-4">
                         <label for="contractDateTimeEnd" class="SnForm-label">Fecha fin</label>
                         <div class="SnControl-wrapper">

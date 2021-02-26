@@ -143,11 +143,11 @@ CREATE TABLE customers(
 
     document_number VARCHAR(16) NOT NULL,
     identity_document_code VARCHAR(64) NOT NULL,
-    social_reason VARCHAR(255),
-    commercial_reason VARCHAR(255),
-    fiscal_address VARCHAR(255),
-    email VARCHAR(64),
-    telephone VARCHAR(255),
+    social_reason VARCHAR(255) DEFAULT '',
+    commercial_reason VARCHAR(255) DEFAULT '',
+    fiscal_address VARCHAR(255) DEFAULT '',
+    email VARCHAR(64) DEFAULT '',
+    telephone VARCHAR(255) DEFAULT '',
 
     updated_at DATETIME,
     created_at DATETIME,
@@ -173,6 +173,19 @@ CREATE TABLE plans(
     CONSTRAINT pk_plans PRIMARY KEY (plan_id)
 ) ENGINE=InnoDB;
 
+CREATE TABLE servers(
+    server_id INT AUTO_INCREMENT NOT NULL,
+    description VARCHAR(128) DEFAULT '',
+    address VARCHAR(64) DEFAULT '',
+
+    updated_at DATETIME,
+    created_at DATETIME,
+    created_user_id INT,
+    updated_user_id INT,
+    state TINYINT DEFAULT 1,
+    CONSTRAINT pk_servers PRIMARY KEY (server_id)
+) ENGINE=InnoDB;
+
 CREATE TABLE contracts(
     contract_id INT AUTO_INCREMENT NOT NULL,
     datetime_of_issue DATE NOT NULL,
@@ -180,10 +193,12 @@ CREATE TABLE contracts(
     datetime_of_due_enable TINYINT DEFAULT 0,
     observation TEXT,
     canceled TINYINT DEFAULT 0,
+    canceled_message VARCHAR(64) DEFAULT '',
 
     plan_id INT NOT NULL,
     customer_id INT NOT NULL,
     user_id INT NOT NULL,
+    server_id INT NOT NULL,
 
     updated_at DATETIME,
     created_at DATETIME,
@@ -210,6 +225,7 @@ CREATE TABLE payments(
     to_datetime  DATE NOT NULL,
     payment_count INT NOT NULL,
     canceled TINYINT DEFAULT 0,
+    canceled_message VARCHAR(64) DEFAULT '',
 
     contract_id INT NOT NULL,
     user_id INT NOT NULL,

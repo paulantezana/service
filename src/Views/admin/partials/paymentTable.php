@@ -14,6 +14,7 @@
                 <th>N° Meses</th>
                 <th>Total</th>
                 <th>Estado</th>
+                <th>Usuario</th>
                 <th style="width: 50px"></th>
             </tr>
         </thead>
@@ -37,6 +38,7 @@
                         <td><?= $row['payment_count'] ?></td>
                         <td><?= $row['total'] ?></td>
                         <td><span class="SnTag <?= $row['canceled'] == 0 ? 'success' : 'error' ?>"><?= $row['canceled'] == 0 ? 'activo' : 'anulado' ?></span></td>
+                        <td><?= $row['user_name'] ?></td>
                         <td>
                             <div class="SnTable-action">
                                 <button class="SnBtn icon jsPaymentOption" title="Anular" onclick="paymentCanceled(<?= $row['payment_id'] ?>)" <?= $row['canceled'] == 1 ? 'disabled' : '' ?>>

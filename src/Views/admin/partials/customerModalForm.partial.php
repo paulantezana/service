@@ -29,14 +29,14 @@
                     </div>
                 </div>
                 <div class="SnForm-item required">
-                    <label for="customerSocialReason" class="SnForm-label">Razón social</label>
+                    <label for="customerSocialReason" class="SnForm-label">Razón social / Nombres</label>
                     <div class="SnControl-wrapper">
                         <i class="far fa-user SnControl-prefix"></i>
                         <input type="text" class="SnForm-control SnControl" id="customerSocialReason" required>
                     </div>
                 </div>
                 <div class="SnForm-item" style="display: none;">
-                    <label for="customerCommercialReason" class="SnForm-label">Comercial social</label>
+                    <label for="customerCommercialReason" class="SnForm-label">Nombre comercial</label>
                     <div class="SnControl-wrapper">
                         <i class="far fa-user SnControl-prefix"></i>
                         <input type="text" class="SnForm-control SnControl" id="customerCommercialReason">
@@ -45,7 +45,7 @@
                 <div class="SnForm-item">
                     <label for="customerFiscalAddress" class="SnForm-label">Dirección fiscal</label>
                     <div class="SnControl-wrapper">
-                        <i class="far fa-user SnControl-prefix"></i>
+                        <i class="fas fa-street-view SnControl-prefix"></i>
                         <input type="text" class="SnForm-control SnControl" id="customerFiscalAddress">
                     </div>
                 </div>

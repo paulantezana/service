@@ -30,7 +30,7 @@ class PlanController extends Controller
         try {
             // authorization($this->connection, 'cliente', 'listar');
             $page = htmlspecialchars(isset($_GET['page']) ? $_GET['page'] : 1);
-            $limit = htmlspecialchars(isset($_GET['limit']) ? $_GET['limit'] : 10);
+            $limit = htmlspecialchars(isset($_GET['limit']) ? $_GET['limit'] : 20);
             $search = htmlspecialchars(isset($_GET['search']) ? $_GET['search'] : '');
 
             $plan = $this->planModel->paginate($page, $limit, $search);

@@ -19,13 +19,25 @@ class PaymentController extends Controller
     public function home()
     {
         try {
+            $this->render('admin/payment.view.php', [
+            ], 'layouts/admin.layout.php');
+        } catch (Exception $e) {
+            $this->render('500.view.php', [
+                'message' => $e->getMessage(),
+            ], 'layouts/admin.layout.php');
+        }
+    }
+
+    public function report()
+    {
+        try {
             $contractId = $_GET['contractId'] ?? 0;
             $contract = [];
             if($contractId > 0){
                 $contract = $this->contractModel->getByIdDetail($contractId);
             }
 
-            $this->render('admin/payment.view.php', [
+            $this->render('admin/paymentReport.view.php', [
                 'contractId' => $contractId,
                 'contract' => $contract,
             ], 'layouts/admin.layout.php');
@@ -42,7 +54,7 @@ class PaymentController extends Controller
         try {
             // authorization($this->connection, 'cliente', 'listar');
             $page = htmlspecialchars(isset($_GET['page']) ? $_GET['page'] : 1);
-            $limit = htmlspecialchars(isset($_GET['limit']) ? $_GET['limit'] : 10);
+            $limit = htmlspecialchars(isset($_GET['limit']) ? $_GET['limit'] : 20);
             $search = htmlspecialchars(isset($_GET['search']) ? $_GET['search'] : '');
             $contractId = htmlspecialchars(isset($_GET['contractId']) ? $_GET['contractId'] : 0);
             
