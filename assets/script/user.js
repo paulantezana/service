@@ -32,7 +32,7 @@ function userSetLoading(state) {
   }
 }
 
-function userList(page = 1, limit = 10, search = "") {
+function userList(page = 1, limit = 20, search = "") {
   let userTable = document.getElementById("userTable");
   if (userTable) {
     SnFreeze.freeze({ selector: "#userTable" });

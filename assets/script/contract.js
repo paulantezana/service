@@ -13,15 +13,6 @@ let customerState = {
 };
 let customerPValidator;
 
-let paymentState = {
-  modalType: "create",
-  modalName: "paymentModalForm",
-  loading: false,
-};
-let paymentPValidator;
-
-let currentContractId = 0;
-
 document.addEventListener("DOMContentLoaded", () => {
   pValidator = new Pristine(document.getElementById("contractForm"));
   customerPValidator = new Pristine(document.getElementById("customerForm"));
@@ -86,7 +77,7 @@ function contractSetLoading(state) {
   }
 }
 
-function contractList(page = 1, limit = 10, search = "") {
+function contractList(page = 1, limit = 20, search = "") {
   let contractTable = document.getElementById("contractTable");
   if (contractTable) {
     SnFreeze.freeze({ selector: "#contractTable" });
@@ -130,6 +121,7 @@ function contractSubmit(e) {
   let contractSendData = {};
   contractSendData.customerId = document.getElementById("contractCustomerId").value;
   contractSendData.planId = document.getElementById("contractPlanId").value;
+  contractSendData.serverId = document.getElementById("contractServerId").value;
   contractSendData.datetimeOfIssue = document.getElementById("contractDateTimeStart").value;
   contractSendData.datetimeOfDue = document.getElementById("contractDateTimeEnd").value;
   contractSendData.datetimeOfDueEnable = document.getElementById("contractDateTimeEndEnable").value;
@@ -212,12 +204,13 @@ function contractGetById(contractId) {
       if (res.success) {
         document.getElementById('contractCustomerId').value = res.result.customer_id;
         document.getElementById('contractPlanId').value = res.result.plan_id;
+        document.getElementById('contractServerId').value = res.result.server_id;
         document.getElementById('contractDateTimeStart').value = res.result.datetime_of_issue;
         document.getElementById('contractDateTimeEnd').value = res.result.datetime_of_due;
         document.getElementById('contractDateTimeEndEnable').value = res.result.datetime_of_due_enable;
         document.getElementById('contractObservation').value = res.result.observation;
         document.getElementById('contractId').value = res.result.contract_id;
-        
+
         SnModal.open(contractState.modalName);
       } else {
         SnModal.error({ title: "Algo salió mal", content: res.message });
@@ -326,141 +319,4 @@ function customerSubmit(e) {
     .finally((e) => {
       customerSetLoading(false);
     });
-}
-
-
-// PAYMENT
-function paymentSetLoading(state) {
-  paymentState.loading = state;
-  let jsPaymentAction = document.querySelectorAll(".jsPaymentAction");
-  let submitButton = document.getElementById("paymentFormSubmit");
-  if (paymentState.loading) {
-    if (submitButton) {
-      submitButton.setAttribute("disabled", "disabled");
-      submitButton.classList.add("loading");
-    }
-    if (jsPaymentAction) {
-      jsPaymentAction.forEach((item) => {
-        item.setAttribute("disabled", "disabled");
-      });
-    }
-  } else {
-    if (submitButton) {
-      submitButton.removeAttribute("disabled");
-      submitButton.classList.remove("loading");
-    }
-    if (jsPaymentAction) {
-      jsPaymentAction.forEach((item) => {
-        item.removeAttribute("disabled");
-      });
-    }
-  }
-}
-
-function paymentShowModalCreate(contractId) {
-  paymentSetLoading(true);
-  RequestApi.fetch("/admin/payment/lastPaymentByContractId", {
-    method: "POST",
-    body: {
-      contractId: contractId || 0,
-    },
-  })
-    .then((res) => {
-      if (res.success) {
-        paymentClearForm();
-        SnModal.open(paymentState.modalName);
-
-        let lastPayment = res.result.lastPayment;
-        let contract = res.result.contract;
-        currentContractId = contract.contract_id;
-
-        let paymentFromDatetime = lastPayment === false ? contract.datetime_of_issue : lastPayment.to_datetime;
-        let MfromDateTome = moment(paymentFromDatetime);
-        document.getElementById('paymentFromDatetime').value = MfromDateTome.format('YYYY-MM-DD');
-        document.getElementById('paymentPrice').value = contract.plan_price;
-
-        let lastPaymentInfo = document.getElementById('lastPaymentInfo');
-        if(lastPayment === false){
-          lastPaymentInfo.innerHTML = 'No existe pagos previos';
-        } else {
-          lastPaymentInfo.innerHTML = `<strong>Ultimo pago</strong>
-          <div>
-              <div><strong>Descripcion:</strong><span> ${lastPayment.description}</span></div>
-              <div><strong>Fecha pago:</strong><span> ${moment(lastPayment.datetime_of_issue).format('LLLL')}</span></div>
-              <div><strong>Rango:</strong><span style="display: flex;justify-content: space-between;">desde <span class="SnTag success">${moment(lastPayment.from_datetime).format('LL')}</span> hasta <span class="SnTag success">${moment(lastPayment.to_datetime).format('LL')}</span></span></div>
-          </div>`;
-        }
-
-        document.getElementById('paymentDescription').innerHTML = `${contract.plan_description} - ${contract.plan_speed}`;
-
-        paymentCountChange();
-      } else {
-        SnModal.error({ title: "Algo salió mal", content: res.message });
-      }
-    })
-    .finally((e) => {
-      paymentSetLoading(false);
-    });
-}
-
-function paymentClearForm() {
-  let currentForm = document.getElementById("paymentForm");
-  let paymentReference = document.getElementById("paymentReference");
-  if (currentForm && paymentReference) {
-    currentForm.reset();
-    paymentReference.focus();
-  }
-  paymentPValidator.reset();
-}
-
-function paymentSubmit(e) {
-  e.preventDefault();
-  if (!paymentPValidator.validate()) {
-    return;
-  }
-  paymentSetLoading(true);
-
-  let paymentSendData = {};
-  paymentSendData.reference = document.getElementById("paymentReference").value;
-  paymentSendData.paymentCount = document.getElementById("paymentCount").value;
-  paymentSendData.fromDatetime = document.getElementById("paymentFromDatetime").value;
-  paymentSendData.toDatetime = document.getElementById("paymentToDatetime").value;
-  paymentSendData.description = document.getElementById("paymentDescription").value;
-  paymentSendData.total = document.getElementById("paymentTotal").value;
-  paymentSendData.contractId = currentContractId;
-
-  if (paymentState.modalType === "update") {
-    paymentSendData.paymentId = document.getElementById("paymentId").value || 0;
-  }
-
-  RequestApi.fetch('/admin/payment/' + paymentState.modalType, {
-    method: "POST",
-    body: paymentSendData,
-  })
-    .then((res) => {
-      if (res.success) {
-        SnModal.close(paymentState.modalName);
-        SnMessage.success({ content: res.message });
-        contractList();
-        paymentPrint(res.result);
-      } else {
-        SnModal.error({ title: "Algo salió mal", content: res.message });
-      }
-    })
-    .finally((e) => {
-      paymentSetLoading(false);
-    });
-}
-
-function paymentCountChange(){
-  let paymentNumberMonth = document.getElementById('paymentCount').value;
-  let paymentFromDatetime = document.getElementById('paymentFromDatetime').value;
-  let paymentPrice = document.getElementById('paymentPrice').value;
-
-  let Mdate = moment(paymentFromDatetime);
-  Mdate.add(paymentNumberMonth,'months');
-
-  let total = parseFloat(paymentPrice) * parseFloat(paymentNumberMonth);
-  document.getElementById('paymentToDatetime').value = Mdate.format('YYYY-MM-DD');
-  document.getElementById('paymentTotal').value = total.toFixed(2);
 }

@@ -42,7 +42,7 @@ function customerSetLoading(state) {
   }
 }
 
-function customerList(page = 1, limit = 10, search = "") {
+function customerList(page = 1, limit = 20, search = "") {
   let customerTable = document.getElementById("customerTable");
   if (customerTable) {
     SnFreeze.freeze({ selector: "#customerTable" });

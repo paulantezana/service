@@ -197,8 +197,8 @@ function SnDropdown() {
     });
 }
 
-function splitParagraphJsPDF(document, text, x1, y1, x2, textAlight = 'left', lineHeight = 7) {
-    let pageInWidth = document.internal.pageSize.width;
+function splitParagraphJsPDF(document, text, x1, y1, x2, textAlight = 'left', lineHeight = 7, textCenter = 0) {
+    // let pageInWidth = document.internal.pageSize.width;
     let lines = document.splitTextToSize(text, x2 - x1);
     // let dim = document.getTextDimensions('Text');
     // let lineHeight = dim.h;
@@ -207,7 +207,7 @@ function splitParagraphJsPDF(document, text, x1, y1, x2, textAlight = 'left', li
         let lineTop = (lineHeight / 2) * i;
 
         if (textAlight === 'center') {
-            document.text(lines[i], pageInWidth / 2, y1 + lineTop, textAlight);
+            document.text(lines[i], textCenter, y1 + lineTop, textAlight);
         } else if (textAlight === 'right') {
             document.text(lines[i], x2, y1 + lineTop, textAlight);
         } else {

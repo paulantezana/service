@@ -3,7 +3,7 @@ $asideFooterHeight: 32px;
 
 // General styles
 .AsideMenu {
-  @extend %snList;
+  @extend %SnList;
   height: calc(100vh - #{$headerHeight + $asideFooterHeight});
   overflow-y: auto;
   &-container {
@@ -22,7 +22,7 @@ $asideFooterHeight: 32px;
     }
   }
   ul {
-    @extend %snList;
+    @extend %SnList;
   }
   a {
     color: var(--snColorText);

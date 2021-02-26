@@ -6,7 +6,7 @@
     //   width: 100%;
     // }
     &-list{
-      @extend %snList;
+      @extend %SnList;
       position: absolute;
       top: calc(100% + 2px);
       right: 0;

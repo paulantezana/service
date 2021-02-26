@@ -32,7 +32,7 @@ function planSetLoading(state) {
   }
 }
 
-function planList(page = 1, limit = 10, search = "") {
+function planList(page = 1, limit = 20, search = "") {
   let planTable = document.getElementById("planTable");
   if (planTable) {
     SnFreeze.freeze({ selector: "#planTable" });

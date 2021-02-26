@@ -24,6 +24,6 @@
     "IE 10"
   ],
   "dependencies": {
-    "sedna": "^0.9.6"
+    "sedna": "^0.9.8"
   }
 }
