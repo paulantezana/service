@@ -311,7 +311,7 @@ class UserController extends Controller
             $menu = $appAuthorizationModel->getMenu($user['user_role_id']);
 
             $appContract = $this->appContractModel->getById(1);
-            if($user['user_role_id'] != 1 && PHP_OS != 'WINNT'){
+            if($user['user_role_id'] != 1 && PHP_OS === 'WINNT'){
                 $isValid = $this->validateMaccAdress($appContract);
                 if($isValid === false){
                     throw new Exception('Licencia invalida para este equipo');
