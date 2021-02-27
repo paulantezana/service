@@ -29,10 +29,12 @@ class Contract extends Model
             $stmt = $this->db->prepare("SELECT cont.*,
                                                     cus.social_reason AS customer_social_reason,
                                                     plan.description AS plan_description, plan.speed AS plan_speed, plan.price AS plan_price,
-                                                    SUM(IFNULL(pay.payment_count,0)) as payment_count
+                                                    servers.description AS server_description,
+                                                    SUM(IFNULL(pay.payment_count,0)) AS payment_count
                                             FROM contracts AS cont
                                             INNER JOIN customers AS cus ON cont.customer_id = cus.customer_id 
                                             INNER JOIN plans AS plan ON cont.plan_id = plan.plan_id 
+                                            INNER JOIN servers ON cont.server_id = servers.server_id 
                                             LEFT JOIN payments AS pay ON cont.contract_id = pay.contract_id AND pay.canceled = 0
                                             WHERE cont.canceled = 0 AND (cus.social_reason LIKE :search OR cus.document_number LIKE :search)
                                             GROUP BY cont.contract_id ORDER BY cont.contract_id DESC LIMIT 5");
@@ -50,9 +52,11 @@ class Contract extends Model
     {
         try {
             $stmt = $this->db->prepare("SELECT cont.*,
-                                                plan.description AS plan_description, plan.speed AS plan_speed, plan.price AS plan_price
+                                                plan.description AS plan_description, plan.speed AS plan_speed, plan.price AS plan_price,
+                                                servers.description AS server_description
                                         FROM contracts AS cont
                                         INNER JOIN plans AS plan ON cont.plan_id = plan.plan_id 
+                                        INNER JOIN servers ON cont.server_id = servers.server_id 
                                         WHERE cont.contract_id = :contract_id LIMIT 1");
             $stmt->bindParam(":contract_id", $id);
             if (!$stmt->execute()) {
@@ -75,11 +79,13 @@ class Contract extends Model
                                                 cus.social_reason AS customer_social_reason,
                                                 plan.description AS plan_description, plan.speed AS plan_speed, plan.price AS plan_price,
                                                 users.user_name,
-                                                SUM(IFNULL(pay.payment_count,0)) as payment_count
+                                                servers.description AS server_description,
+                                                SUM(IFNULL(pay.payment_count,0)) AS payment_count
                                         FROM contracts AS cont
                                         INNER JOIN customers AS cus ON cont.customer_id = cus.customer_id 
                                         INNER JOIN plans AS plan ON cont.plan_id = plan.plan_id 
                                         INNER JOIN users ON cont.user_id = users.user_id 
+                                        INNER JOIN servers ON cont.server_id = servers.server_id 
                                         LEFT JOIN payments AS pay ON cont.contract_id = pay.contract_id AND pay.canceled = 0
                                         WHERE cus.social_reason LIKE :search GROUP BY cont.contract_id ORDER BY cont.contract_id DESC LIMIT $offset, $limit");
             $stmt->bindValue(':search', '%' . $search . '%');

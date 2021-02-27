@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   pValidator = new Pristine(document.getElementById("contractForm"));
   customerPValidator = new Pristine(document.getElementById("customerForm"));
   paymentPValidator = new Pristine(document.getElementById("paymentForm"));
+  moment.locale('es');
 
   document.getElementById("searchContent").addEventListener("input", (e) => {
     contractList(1, 10, e.target.value);

@@ -65,6 +65,7 @@ class ReportController extends Controller
             $res->result = [
                 'payment' => $payment,
                 'company' => $company,
+                'currentDate' => date('Y-m-d H:i:s'),
             ];
             $res->success = true;
         } catch (Exception $e) {

@@ -4,7 +4,7 @@
             <tr>
                 <th>Cod</th>
                 <th>Cliente</th>
-                <th>Plan</th>
+                <th>Descripción</th>
                 <th>Desde</th>
                 <th>Hasta</th>
                 <th>Estado</th>
@@ -19,7 +19,7 @@
                     <td><?= $row['contract_id'] ?></td>
                     <td><?= $row['customer_social_reason'] ?></td>
                     <td>
-                        <span><?= $row['plan_description'] ?></span>
+                        <span><?= $row['server_description'] ?> - <?= $row['plan_description'] ?></span>
                         <div>
                             <small><?= $row['plan_speed'] ?> - S/. <?= $row['plan_price'] ?></small>
                         </div>

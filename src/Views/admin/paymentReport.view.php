@@ -48,6 +48,7 @@
     var currentContractId = <?= $parameter['contractId'] ?>;
 </script>
 <script src="<?= URL_PATH ?>/assets/script/helpers/jspdf.min.js"></script>
+<script src="<?= URL_PATH ?>/assets/script/helpers/moment-with-locales.min.js"></script>
 <script src="<?= URL_PATH ?>/assets/script/paymentPrint.js"></script>
 <script src="<?= URL_PATH ?>/assets/script/paymentReport.js"></script>
 <?php require_once (__DIR__ . '/partials/pdfPrintModal.partial.php') ?>

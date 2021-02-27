@@ -168,11 +168,6 @@ class PaymentController extends Controller
         $res->success = true;
 
         if ($type == 'create' || $type == 'update') {
-            if (($body['reference'] ?? '') == '') {
-                $res->message .= 'Falta ingresar la referencia | ';
-                $res->success = false;
-            }
-
             if (($body['paymentCount'] ?? '') == '') {
                 $res->message .= 'Falta ingresar el número de meses a pagar | ';
                 $res->success = false;

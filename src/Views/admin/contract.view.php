@@ -30,7 +30,7 @@
 </div>
 
 <script src="<?= URL_PATH ?>/assets/script/helpers/jspdf.min.js"></script>
-<script src="<?= URL_PATH ?>/assets/script/helpers/moment.js"></script>
+<script src="<?= URL_PATH ?>/assets/script/helpers/moment-with-locales.min.js"></script>
 <script src="<?= URL_PATH ?>/assets/script/paymentPay.js"></script>
 <script src="<?= URL_PATH ?>/assets/script/paymentPrint.js"></script>
 <script src="<?= URL_PATH ?>/assets/script/contract.js"></script>

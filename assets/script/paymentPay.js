@@ -10,6 +10,7 @@ let paymentPValidator;
 
 document.addEventListener("DOMContentLoaded", () => {
     paymentPValidator = new Pristine(document.getElementById("paymentForm"));
+    moment.locale('es');
 });
 
 
@@ -74,7 +75,7 @@ function paymentShowModalCreate(contractId) {
             </div>`;
                 }
 
-                document.getElementById('paymentDescription').innerHTML = `${contract.plan_description} - ${contract.plan_speed}`;
+                document.getElementById('paymentDescription').innerHTML = `${contract.server_description} - ${contract.plan_description} - ${contract.plan_speed}`;
 
                 paymentCountChange();
             } else {

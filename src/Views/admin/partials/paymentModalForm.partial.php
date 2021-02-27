@@ -9,11 +9,11 @@
                 <input type="hidden" class="SnForm-control" id="paymentId">
                 <input type="hidden" class="SnForm-control" id="paymentPrice">
                 <div style="margin-bottom: 1rem;" id="lastPaymentInfo"></div>
-                <div class="SnForm-item required">
+                <div class="SnForm-item">
                     <label for="paymentReference" class="SnForm-label">Folio</label>
                     <div class="SnControl-wrapper">
                         <i class="fas fa-file-alt SnControl-prefix"></i>
-                        <input type="text" class="SnForm-control SnControl" id="paymentReference" required>
+                        <input type="text" class="SnForm-control SnControl" id="paymentReference">
                     </div>
                 </div>
                 <div class="SnForm-item">
