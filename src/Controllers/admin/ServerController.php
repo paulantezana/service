@@ -28,7 +28,7 @@ class ServerController extends Controller
     {
         $res = new Result();
         try {
-            // authorization($this->connection, 'cliente', 'listar');
+            authorization($this->connection, 'server', 'listar');
             $page = htmlspecialchars(isset($_GET['page']) ? $_GET['page'] : 1);
             $limit = htmlspecialchars(isset($_GET['limit']) ? $_GET['limit'] : 20);
             $search = htmlspecialchars(isset($_GET['search']) ? $_GET['search'] : '');
@@ -49,7 +49,7 @@ class ServerController extends Controller
     {
         $res = new Result();
         try {
-            // authorization($this->connection, 'cliente', 'modificar');
+            authorization($this->connection, 'server', 'modificar');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 
@@ -66,7 +66,7 @@ class ServerController extends Controller
     {
         $res = new Result();
         try {
-            // authorization($this->connection, 'cliente', 'crear');
+            authorization($this->connection, 'server', 'crear');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 
@@ -91,7 +91,7 @@ class ServerController extends Controller
     {
         $res = new Result();
         try {
-            // authorization($this->connection, 'cliente', 'modificar');
+            authorization($this->connection, 'server', 'modificar');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 
@@ -121,7 +121,7 @@ class ServerController extends Controller
     {
         $res = new Result();
         try {
-            // authorization($this->connection, 'cliente', 'eliminar');
+            authorization($this->connection, 'server', 'eliminar');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 

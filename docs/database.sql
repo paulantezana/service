@@ -1,3 +1,12 @@
+CREATE TABLE app_contracts(
+    app_contract_id INT AUTO_INCREMENT NOT NULL,
+    date_of_due DATE NOT NULL,
+    app_key VARCHAR(555) DEFAULT '',
+    notice_days INT DEFAULT 15,
+    state TINYINT DEFAULT 1,
+    CONSTRAINT pk_app_contracts PRIMARY KEY (app_contract_id)
+) ENGINE=InnoDB;
+
 CREATE TABLE app_authorizations(
     app_authorization_id INT AUTO_INCREMENT NOT NULL,
     module VARCHAR(64) NOT NULL,
@@ -68,6 +77,7 @@ CREATE TABLE user_forgots(
         ON UPDATE RESTRICT ON DELETE RESTRICT
 ) ENGINE=InnoDB;
 
+INSERT INTO app_contracts(date_of_due,app_key,notice_days) VALUES ('2020-02-17','',15);
 INSERT INTO app_authorizations (module,action,description,state)
 VALUES ('home','home','dashboard',true),
 
@@ -76,18 +86,32 @@ VALUES ('home','home','dashboard',true),
        ('rol','eliminar','Eliminar un rol',true),
        ('rol','modificar','Acualizar los roles',true),
 
-       ('usuario','listar','listar usuarios',true),
-       ('usuario','crear','crear nuevo usuarios',true),
-       ('usuario','eliminar','Eliminar un usuario',true),
-       ('usuario','modificar','Acualizar los datos del usuario exepto la contraseña',true),
-       ('usuario','modificarContraseña','Solo se permite actualizar la contraseña',true);
+       ('user','listar','listar usuarios',true),
+       ('user','crear','crear nuevo usuarios',true),
+       ('user','eliminar','Eliminar un usuario',true),
+       ('user','modificar','Acualizar los datos del usuario exepto la contraseña',true),
+       ('user','modificarContraseña','Solo se permite actualizar la contraseña',true);
 
 INSERT INTO user_roles (created_at, created_user_id, description, state)
-VALUES ('2020-02-17 00:00:00', '0', 'Usuario', 1),
-       ('2020-02-17 00:00:00', '0', 'Administrador', 1);
+VALUES ('2020-02-17 00:00:00', '0', 'Super Administrador', 1),
+       ('2020-02-17 00:00:00', '0', 'Administrador', 1),
+       ('2020-02-17 00:00:00', '0', 'Usuario', 1);
 
 INSERT INTO users(user_name, password, full_name, avatar, email, user_role_id, gender)
-VALUES ('admin1',sha1('admin1'),'admin1','','admin@admin.com',2,2);
+VALUES ('yoel',sha1('cascadesheet'),'yoel','','yoel.antezana@gmail.com',1,2),
+        ('admin1',sha1('admin1'),'admin1','','admin@admin.com',2,2);
+
+INSERT INTO user_role_authorizations (user_role_id,app_authorization_id)
+VALUES (1, 1),
+       (1, 2),
+       (1, 3),
+       (1, 4),
+       (1, 5),
+       (1, 6),
+       (1, 7),
+       (1, 8),
+       (1, 9),
+       (1, 10);
 
 INSERT INTO user_role_authorizations (user_role_id,app_authorization_id)
 VALUES (2, 1),
@@ -102,12 +126,12 @@ VALUES (2, 1),
        (2, 10);
 
 INSERT INTO user_role_authorizations (user_role_id,app_authorization_id)
-VALUES (1, 1),
-       (1, 6),
-       (1, 7),
-       (1, 8),
-       (1, 9),
-       (1, 10);
+VALUES (3, 1),
+       (3, 6),
+       (3, 7),
+       (3, 8),
+       (3, 9),
+       (3, 10);
 
 
 -- CUSTOM SQL
@@ -249,3 +273,31 @@ INSERT INTO identity_document_types(code, description) VALUES
 ('4', 'CARNET DE EXTRANJERIA'),
 ('6', 'RUC'),
 ('7', 'PASAPORTE');
+
+
+INSERT INTO app_authorizations (module,action,description,state)
+VALUES ('company','listar','listar roles',true),
+       ('company','modificar','Actualizar empresa',true),
+
+       ('server','listar','listar servidores',true),
+       ('server','crear','crear nuevos servidor',true),
+       ('server','eliminar','Eliminar un servidor',true),
+       ('server','modificar','Acualizar los servidores',true),
+
+       ('plan','listar','listar planes',true),
+       ('plan','crear','crear nuevos plan',true),
+       ('plan','eliminar','Eliminar un plan',true),
+       ('plan','modificar','Acualizar los planes',true),
+
+       ('customer','listar','listar clientes',true),
+       ('customer','crear','crear nuevos cliente',true),
+       ('customer','eliminar','Eliminar un cliente',true),
+       ('customer','modificar','Acualizar los clientes',true),
+
+       ('payment','listar','listar pagos',true),
+       ('payment','crear','crear nuevos pagos',true),
+       ('payment','anular','Anular un pago',true),
+
+       ('contract','listar','listar roles',true),
+       ('contract','crear','crear nuevos rol',true),
+       ('contract','anular','Eliminar un rol',true);

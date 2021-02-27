@@ -54,7 +54,7 @@
             <?php echo $content ?>
         </div>
         <div class="SiteLayout-footer">
-            Copyright © <?= date('Y') ?> <?= APP_AUTHOR ?>
+            <a href="<?= APP_AUTHOR_WEB ?>" target="_blank">Copyright © <?= date('Y') ?> <?= APP_AUTHOR ?></a>
         </div>
     </div>
     <script src="<?= URL_PATH ?>/assets/script/siteLayout.js"></script>

@@ -4,13 +4,30 @@
     grid-template-areas: "layoutHeader"
                           "layoutMain"
                           "layoutFooter";
-    // background: linear-gradient(45deg, #052C48 50%, #0C4C69 50%);
     min-height: 100vh;
-    // @include from(l){
-    //     grid-template-columns: 420px 1fr;
-    //     grid-template-areas: "layoutHeader layoutMain"
-    //                             "layoutHeader layoutFooter";
+    background: url('./../images/background.svg') center center no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    
+    // @include from(m){
+    //     $mCircleZise: 260px;
+    //     background: radial-gradient(var(--snColor1) 65%, transparent 65%) top #{($mCircleZise / 2)*-1} right #{($mCircleZise / 2)*-1} /#{$mCircleZise} #{$mCircleZise} no-repeat,
+    //                 radial-gradient(var(--snColor1) 65%, transparent 65%) bottom #{($mCircleZise / 2)*-1} left #{($mCircleZise / 2)*-1} /#{$mCircleZise} #{$mCircleZise} no-repeat;
+    //                 // radial-gradient(var(--snColor1Lighter4) 65%, transparent 65%) top top /250px 250px no-repeat;
     // }
+
+    // @include from(l){
+    //     $mCircleZise: 300px;
+    //     background: radial-gradient(var(--snColor1) 65%, transparent 65%) top #{($mCircleZise / 2)*-1} right #{($mCircleZise / 2)*-1} /#{$mCircleZise} #{$mCircleZise} no-repeat,
+    //                 radial-gradient(var(--snColor1) 65%, transparent 65%) bottom #{($mCircleZise / 2)*-1} left #{($mCircleZise / 2)*-1} /#{$mCircleZise} #{$mCircleZise} no-repeat;
+    //                 // radial-gradient(var(--snColor1Lighter4) 65%, transparent 65%) top top /250px 250px no-repeat;
+    // }
+    // @include from(lg){
+    //     $mCircleZise: 320px;
+    //     background: radial-gradient(var(--snColor1) 65%, transparent 65%) top #{($mCircleZise / 2)*-1} right #{($mCircleZise / 2)*-1} /#{$mCircleZise} #{$mCircleZise} no-repeat,
+    //                 radial-gradient(var(--snColor1) 65%, transparent 65%) bottom #{($mCircleZise / 2)*-1} left #{($mCircleZise / 2)*-1} /#{$mCircleZise} #{$mCircleZise} no-repeat;
+    // }
+
     &-header {
         // grid-area: layoutHeader;
         // @include to(l){
@@ -23,6 +40,7 @@
         font-size: .8rem;
         color: var(--snColorTextAlt);
         grid-area: layoutFooter;
+        padding: 1rem;
     }
     &-main{
         padding: 4rem 0 3rem;

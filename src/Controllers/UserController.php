@@ -1,19 +1,23 @@
 <?php
 
+require_once(MODEL_PATH . '/AppContract.php');
 require_once(MODEL_PATH . '/User.php');
 require_once(MODEL_PATH . '/UserForgot.php');
 require_once(MODEL_PATH . '/AppAuthorization.php');
 require_once(CERVICE_PATH . '/SendManager/EmailManager.php');
+require_once(CONTROLLER_PATH . '/Helpers/TokenSign.php');
 
 class UserController extends Controller
 {
     private $connection;
     private $userModel;
+    private $appContractModel;
 
     public function __construct(PDO $connection)
     {
         $this->connection = $connection;
         $this->userModel = new User($connection);
+        $this->appContractModel = new AppContract($connection);
     }
 
     public function login()
@@ -306,18 +310,40 @@ class UserController extends Controller
             $appAuthorizationModel = new AppAuthorization($this->connection);
             $menu = $appAuthorizationModel->getMenu($user['user_role_id']);
 
+            $appContract = $this->appContractModel->getById(1);
+            if($user['user_role_id'] != 1 && PHP_OS != 'WINNT'){
+                $isValid = $this->validateMaccAdress($appContract);
+                if($isValid === false){
+                    throw new Exception('Licencia invalida para este equipo');
+                }
+            }
+
             // 1 day
             setcookie('admin_menu', json_encode($menu), time() + (86400000), '/');
-            
+
             unset($user['password']);
             $_SESSION[SESS_KEY] = $user['user_id'];
             $_SESSION[SESS_USER] = $user;
+            $_SESSION[SESS_DATE_OF_DUE] = $appContract['date_of_due'];
+            $_SESSION[SESS_DATE_OF_DUE_DAY] = $appContract['notice_days'];
 
             $res->success = true;
         } catch (Exception $e) {
             $res->message = $e->getMessage();
         }
         return $res;
+    }
+
+    private function validateMaccAdress($appContract)
+    {
+        exec("ipconfig /all", $arr, $retval);
+        $arr[14];
+        $address = explode(":", $arr[14])[1];
+
+        // TokenSign
+        $token = TokenSign::decode($appContract['app_key']);
+
+        return trim($token['address']) === trim($address);
     }
 
     public function update()

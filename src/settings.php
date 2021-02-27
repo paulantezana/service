@@ -31,9 +31,12 @@ define('CERVICE_PATH', ROOT_DIR . '/src/Services');
 
 define('SESS_KEY','SnId_service');
 define('SESS_USER','SnUser_service');
+define('SESS_DATE_OF_DUE','SnDateOfDue_service');
+define('SESS_DATE_OF_DUE_DAY','SnDateOfDueDay_service');
 
 define('APP_NAME','Servicios');
 define('APP_AUTHOR','paulantezana');
+define('APP_AUTHOR_WEB','http://paulantezana.com/');
 define('APP_DESCRIPTION','Control de pagos');
 define('APP_EMAIL','paulantezana.2@gmail.com');
 

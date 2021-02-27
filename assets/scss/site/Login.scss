@@ -1,11 +1,11 @@
 .Login{
-  width: 350px;
-  max-width: 100%;
+  width: 400px;
+  // width: 350px;
+  // max-width: 100%;
   margin: auto;
-  padding: 1rem;
-  @include from(l){
-    width: 320px;
-  }
+  // padding: 1rem;
+  // @include from(l){
+  // }
   a{
     text-decoration: none;
     color: var(--snColor1);

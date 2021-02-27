@@ -11,7 +11,11 @@ class UserRole extends Model
     public function getAllWinDisabled()
     {
         try {
-            $stmt = $this->db->prepare('SELECT * FROM user_roles');
+            if($_SESSION[SESS_KEY] == 1){
+                $stmt = $this->db->prepare('SELECT * FROM user_roles');
+            } else {
+                $stmt = $this->db->prepare('SELECT * FROM user_roles WHERE user_role_id > 1');
+            }
             if (!$stmt->execute()) {
                 throw new Exception($stmt->errorInfo()[2]);
             }
@@ -24,7 +28,11 @@ class UserRole extends Model
     public function getAll()
     {
         try {
-            $stmt = $this->db->prepare('SELECT * FROM user_roles WHERE state = 1');
+            if($_SESSION[SESS_KEY] == 1){
+                $stmt = $this->db->prepare('SELECT * FROM user_roles WHERE state = 1');
+            } else {
+                $stmt = $this->db->prepare('SELECT * FROM user_roles WHERE user_role_id > 1 AND state = 1');
+            }
             if (!$stmt->execute()) {
                 throw new Exception($stmt->errorInfo()[2]);
             }

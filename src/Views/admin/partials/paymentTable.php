@@ -55,7 +55,7 @@
                 </tr>
             <?php else : ?>
                 <tr>
-                    <td colspan="11">
+                    <td colspan="14">
                         <div class="SnEmpty">
                             <img src="<?= URL_PATH . '/assets/images/empty.svg' ?>" alt="">
                             <div>No hay datos</div>

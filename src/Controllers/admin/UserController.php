@@ -17,7 +17,7 @@ class UserController extends Controller
     public function home()
     {
         try {
-            authorization($this->connection, 'usuario', 'listar');
+            authorization($this->connection, 'user', 'listar');
             $userRoleModel = new UserRole($this->connection);
             $userRole = $userRoleModel->getAll();
 
@@ -35,7 +35,7 @@ class UserController extends Controller
     {
         $res = new Result();
         try {
-            authorization($this->connection, 'usuario', 'listar');
+            authorization($this->connection, 'user', 'listar');
             $page = htmlspecialchars(isset($_GET['page']) ? $_GET['page'] : 1);
             $limit = htmlspecialchars(isset($_GET['limit']) ? $_GET['limit'] : 20);
             $search = htmlspecialchars(isset($_GET['search']) ? $_GET['search'] : '');
@@ -70,7 +70,7 @@ class UserController extends Controller
     {
         $res = new Result();
         try {
-            authorization($this->connection, 'usuario', 'modificar');
+            authorization($this->connection, 'user', 'modificar');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 
@@ -86,7 +86,7 @@ class UserController extends Controller
     {
         $res = new Result();
         try {
-            authorization($this->connection, 'usuario', 'crear');
+            authorization($this->connection, 'user', 'crear');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 
@@ -114,7 +114,7 @@ class UserController extends Controller
     {
         $res = new Result();
         try {
-            authorization($this->connection, 'usuario', 'modificar');
+            authorization($this->connection, 'user', 'modificar');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 
@@ -144,7 +144,7 @@ class UserController extends Controller
     {
         $res = new Result();
         try {
-            authorization($this->connection, 'usuario', 'modificar');
+            authorization($this->connection, 'user', 'modificar');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 
@@ -177,7 +177,7 @@ class UserController extends Controller
     {
         $res = new Result();
         try {
-            authorization($this->connection, 'usuario', 'modificar');
+            authorization($this->connection, 'user', 'modificar');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 
@@ -205,7 +205,7 @@ class UserController extends Controller
     {
         $res = new Result();
         try {
-            authorization($this->connection, 'usuario', 'eliminar');
+            authorization($this->connection, 'user', 'eliminar');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 

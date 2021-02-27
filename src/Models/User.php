@@ -7,10 +7,24 @@ class User extends Model
         parent::__construct('users', 'user_id', $connection);
     }
 
+    public function getByIdShort(int $id)
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT user_id, user_role_id, user_name, full_name, email, avatar, full_name  FROM users WHERE user_id = :user_id LIMIT 1");
+            $stmt->bindParam(":user_id", $id);
+            if (!$stmt->execute()) {
+                throw new Exception($stmt->errorInfo()[2]);
+            }
+            return $stmt->fetch();
+        } catch (Exception $e) {
+            throw new Exception('Error en metodo : ' . __FUNCTION__ . ' | ' . $e->getMessage());
+        }
+    }
+
     public function count()
     {
         try {
-            $stmt = $this->db->prepare("SELECT COUNT(*) as total FROM users WHERE state = 1");
+            $stmt = $this->db->prepare("SELECT COUNT(*) as total FROM users WHERE user_id > 1 AND state = 1");
             if (!$stmt->execute()) {
                 throw new Exception($stmt->errorInfo()[2]);
             }
@@ -29,14 +43,14 @@ class User extends Model
     {
         try {
             $offset = ($page - 1) * $limit;
-            $totalRows = $this->db->query("SELECT COUNT(*) FROM users WHERE user_name LIKE '%{$search}%'")->fetchColumn();
+            $totalRows = $this->db->query("SELECT COUNT(*) FROM users WHERE user_id > 1 AND user_name LIKE '%{$search}%'")->fetchColumn();
             $totalPages = ceil($totalRows / $limit);
 
             $stmt = $this->db->prepare("SELECT users.*, ur.description as user_roles,
                                         ur.state as user_role_state
                                         FROM users
                                         INNER JOIN user_roles ur on users.user_role_id = ur.user_role_id
-                                        WHERE users.user_name LIKE :search LIMIT $offset, $limit");
+                                        WHERE users.user_id > 1 AND users.user_name LIKE :search LIMIT $offset, $limit");
             $stmt->bindValue(':search', '%' . $search . '%');
 
             if (!$stmt->execute()) {

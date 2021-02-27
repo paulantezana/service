@@ -52,7 +52,7 @@ class PaymentController extends Controller
     {
         $res = new Result();
         try {
-            // authorization($this->connection, 'cliente', 'listar');
+            authorization($this->connection, 'payment', 'listar');
             $page = htmlspecialchars(isset($_GET['page']) ? $_GET['page'] : 1);
             $limit = htmlspecialchars(isset($_GET['limit']) ? $_GET['limit'] : 20);
             $search = htmlspecialchars(isset($_GET['search']) ? $_GET['search'] : '');
@@ -70,27 +70,27 @@ class PaymentController extends Controller
         echo json_encode($res);
     }
 
-    public function id()
-    {
-        $res = new Result();
-        try {
-            // authorization($this->connection, 'cliente', 'modificar');
-            $postData = file_get_contents('php://input');
-            $body = json_decode($postData, true);
+    // public function id()
+    // {
+    //     $res = new Result();
+    //     try {
+    //         authorization($this->connection, 'payment', 'modificar');
+    //         $postData = file_get_contents('php://input');
+    //         $body = json_decode($postData, true);
 
-            $res->result = $this->paymentModel->getById($body['paymentId']);
-            $res->success = true;
-        } catch (Exception $e) {
-            $res->message = $e->getMessage();
-        }
-        echo json_encode($res);
-    }
+    //         $res->result = $this->paymentModel->getById($body['paymentId']);
+    //         $res->success = true;
+    //     } catch (Exception $e) {
+    //         $res->message = $e->getMessage();
+    //     }
+    //     echo json_encode($res);
+    // }
 
     public function lastPaymentByContractId()
     {
         $res = new Result();
         try {
-            // authorization($this->connection, 'cliente', 'modificar');
+            authorization($this->connection, 'payment', 'listar');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 
@@ -112,7 +112,7 @@ class PaymentController extends Controller
     {
         $res = new Result();
         try {
-            // authorization($this->connection, 'cliente', 'crear');
+            authorization($this->connection, 'payment', 'crear');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 
@@ -138,46 +138,11 @@ class PaymentController extends Controller
         echo json_encode($res);
     }
 
-    public function update()
-    {
-        $res = new Result();
-        try {
-            // authorization($this->connection, 'cliente', 'modificar');
-            $postData = file_get_contents('php://input');
-            $body = json_decode($postData, true);
-
-            $validate = $this->validateInput($body, 'update');
-            if (!$validate->success) {
-                throw new Exception($validate->message);
-            }
-
-            $currentDate = date('Y-m-d H:i:s');
-            $this->paymentModel->updateById($body['paymentId'], [
-                'description'=> htmlspecialchars($body['speed'] . ' ' . $body['plan']),
-                'reference'=> htmlspecialchars($body['reference']),
-                'payment_count'=> htmlspecialchars($body['paymentCount']),
-                'fromDatetime'=> htmlspecialchars($body['fromDatetime']),
-                'toDatetime'=> htmlspecialchars($body['toDatetime']),
-                'total'=> htmlspecialchars($body['total']),
-                'contractId'=> htmlspecialchars($body['contractId']),
-
-                'updated_at' => $currentDate,
-                'updated_user_id' => $_SESSION[SESS_KEY],
-            ]);
-
-            $res->success = true;
-            $res->message = 'El registro se actualizo exitosamente';
-        } catch (Exception $e) {
-            $res->message = $e->getMessage();
-        }
-        echo json_encode($res);
-    }
-
     public function canceled()
     {
         $res = new Result();
         try {
-            // authorization($this->connection, 'cliente', 'eliminar');
+            authorization($this->connection, 'payment', 'anular');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 

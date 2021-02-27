@@ -17,7 +17,7 @@ class CustomerController extends Controller
     public function home()
     {
         try {
-            // authorization($this->connection, 'cliente', 'listar');
+            authorization($this->connection, 'customer', 'listar');
             $identityDocumentTypeModel = new IdentityDocumentType($this->connection);
             $identityDocumentType = $identityDocumentTypeModel->getAll();
 
@@ -56,7 +56,7 @@ class CustomerController extends Controller
     {
         $res = new Result();
         try {
-            // authorization($this->connection, 'cliente', 'modificar');
+            authorization($this->connection, 'customer', 'modificar');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 
@@ -87,7 +87,7 @@ class CustomerController extends Controller
     {
         $res = new Result();
         try {
-            // authorization($this->connection, 'cliente', 'crear');
+            authorization($this->connection, 'customer', 'crear');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 
@@ -117,7 +117,7 @@ class CustomerController extends Controller
     {
         $res = new Result();
         try {
-            // authorization($this->connection, 'cliente', 'modificar');
+            authorization($this->connection, 'customer', 'modificar');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 
@@ -152,7 +152,7 @@ class CustomerController extends Controller
     {
         $res = new Result();
         try {
-            // authorization($this->connection, 'cliente', 'eliminar');
+            authorization($this->connection, 'customer', 'eliminar');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 
@@ -176,7 +176,6 @@ class CustomerController extends Controller
     {
         $res = new Result();
         try {
-            // authorization($this->connection, 'cliente', 'eliminar');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 

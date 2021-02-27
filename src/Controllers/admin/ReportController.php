@@ -23,7 +23,7 @@ class ReportController extends Controller
     {
         $res = new Result();
         try {
-            authorization($this->connection, 'usuario', 'modificar');
+            authorization($this->connection, 'home', 'home');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 
@@ -39,7 +39,7 @@ class ReportController extends Controller
     {
         $res = new Result();
         try {
-            authorization($this->connection, 'usuario', 'modificar');
+            authorization($this->connection, 'home', 'home');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 
@@ -55,7 +55,7 @@ class ReportController extends Controller
     {
         $res = new Result();
         try {
-            // authorization($this->connection, 'cliente', 'modificar');
+            // authorization($this->connection, 'home', 'home');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 

@@ -44,7 +44,7 @@ class ContractController extends Controller
     {
         $res = new Result();
         try {
-            // authorization($this->connection, 'cliente', 'listar');
+            authorization($this->connection, 'contract', 'listar');
             $page = htmlspecialchars(isset($_GET['page']) ? $_GET['page'] : 1);
             $limit = htmlspecialchars(isset($_GET['limit']) ? $_GET['limit'] : 20);
             $search = htmlspecialchars(isset($_GET['search']) ? $_GET['search'] : '');
@@ -61,21 +61,21 @@ class ContractController extends Controller
         echo json_encode($res);
     }
 
-    public function id()
-    {
-        $res = new Result();
-        try {
-            // authorization($this->connection, 'cliente', 'modificar');
-            $postData = file_get_contents('php://input');
-            $body = json_decode($postData, true);
+    // public function id()
+    // {
+    //     $res = new Result();
+    //     try {
+    //         // authorization($this->connection, 'contract', 'modificar');
+    //         $postData = file_get_contents('php://input');
+    //         $body = json_decode($postData, true);
 
-            $res->result = $this->contractModel->getById($body['contractId']);
-            $res->success = true;
-        } catch (Exception $e) {
-            $res->message = $e->getMessage();
-        }
-        echo json_encode($res);
-    }
+    //         $res->result = $this->contractModel->getById($body['contractId']);
+    //         $res->success = true;
+    //     } catch (Exception $e) {
+    //         $res->message = $e->getMessage();
+    //     }
+    //     echo json_encode($res);
+    // }
 
     public function searchByCustomer()
     {
@@ -101,7 +101,7 @@ class ContractController extends Controller
     {
         $res = new Result();
         try {
-            // authorization($this->connection, 'cliente', 'crear');
+            authorization($this->connection, 'contract', 'crear');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 
@@ -127,46 +127,11 @@ class ContractController extends Controller
         echo json_encode($res);
     }
 
-    public function update()
-    {
-        $res = new Result();
-        try {
-            // authorization($this->connection, 'cliente', 'modificar');
-            $postData = file_get_contents('php://input');
-            $body = json_decode($postData, true);
-
-            $validate = $this->validateInput($body, 'update');
-            if (!$validate->success) {
-                throw new Exception($validate->message);
-            }
-
-            $currentDate = date('Y-m-d H:i:s');
-            $this->contractModel->updateById($body['contractId'], [
-                'datetimeOfIssue'=> htmlspecialchars($body['datetimeOfIssue']),
-                'datetimeOfDue'=> htmlspecialchars($body['datetimeOfDue']),
-                'datetimeOfDueEnable'=> htmlspecialchars($body['datetimeOfDueEnable']),
-                'observation'=> htmlspecialchars($body['observation']),
-                'customerId'=> htmlspecialchars($body['customerId']),
-                'planId'=> htmlspecialchars($body['planId']),
-                'serverId'=> htmlspecialchars($body['serverId']),
-
-                'updated_at' => $currentDate,
-                'updated_user_id' => $_SESSION[SESS_KEY],
-            ]);
-
-            $res->success = true;
-            $res->message = 'El registro se actualizo exitosamente';
-        } catch (Exception $e) {
-            $res->message = $e->getMessage();
-        }
-        echo json_encode($res);
-    }
-
     public function canceled()
     {
         $res = new Result();
         try {
-            // authorization($this->connection, 'cliente', 'eliminar');
+            authorization($this->connection, 'contract', 'eliminar');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 

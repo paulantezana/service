@@ -56,7 +56,7 @@
                 </tr>
             <?php endforeach; else: ?>
                 <tr>
-                    <td colspan="8">
+                    <td colspan="9">
                         <div class="SnEmpty">
                             <img src="<?= URL_PATH . '/assets/images/empty.svg' ?>" alt="">
                             <div>No hay datos</div>
