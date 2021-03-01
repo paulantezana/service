@@ -40,7 +40,7 @@ define('APP_AUTHOR_WEB','http://paulantezana.com/');
 define('APP_DESCRIPTION','Control de pagos');
 define('APP_EMAIL','paulantezana.2@gmail.com');
 
-define('APP_DEV',true);
+define('APP_DEV',false);
 
 define('FILE_PATH', '/files');
 
