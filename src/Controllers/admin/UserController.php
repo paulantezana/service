@@ -114,7 +114,6 @@ class UserController extends Controller
     {
         $res = new Result();
         try {
-            authorization($this->connection, 'user', 'modificar');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 
@@ -131,6 +130,33 @@ class UserController extends Controller
 
                 'updated_at' => $currentDate,
                 'updated_user_id' => $_SESSION[SESS_KEY],
+            ]);
+            $res->success = true;
+            $res->message = 'El registro se actualizo exitosamente';
+        } catch (Exception $e) {
+            $res->message = $e->getMessage();
+        }
+        echo json_encode($res);
+    }
+
+    public function updateProfilePassword()
+    {
+        $res = new Result();
+        try {
+            $postData = file_get_contents('php://input');
+            $body = json_decode($postData, true);
+
+            $validate = $this->validateInput($body, 'updatePassword');
+            if (!$validate->success) {
+                throw new Exception($validate->message);
+            }
+
+            $currentDate = date('Y-m-d H:i:s');
+            $this->userModel->updateById($body['userId'], [
+                'updated_at' => $currentDate,
+                'updated_user_id' => $_SESSION[SESS_KEY],
+
+                'password' => sha1(htmlspecialchars($body['password'])),
             ]);
             $res->success = true;
             $res->message = 'El registro se actualizo exitosamente';

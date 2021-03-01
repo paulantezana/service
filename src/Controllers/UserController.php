@@ -12,12 +12,14 @@ class UserController extends Controller
     private $connection;
     private $userModel;
     private $appContractModel;
+    private $userForgotModel;
 
     public function __construct(PDO $connection)
     {
         $this->connection = $connection;
         $this->userModel = new User($connection);
         $this->appContractModel = new AppContract($connection);
+        $this->userForgotModel = new UserForgot($connection);
     }
 
     public function login()

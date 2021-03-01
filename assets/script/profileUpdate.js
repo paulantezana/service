@@ -27,7 +27,7 @@ function profileUpdatePassword(event) {
     "userPasswordConfirm"
   ).value;
 
-  RequestApi.fetch("/admin/user/updatePassword", {
+  RequestApi.fetch("/admin/user/updateProfilePassword", {
     method: "POST",
     body: userSendData,
   }).then((res) => {
