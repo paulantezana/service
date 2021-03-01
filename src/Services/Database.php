@@ -13,7 +13,7 @@ class Database
             // $this->connection = new PDO('sqlite:' . __DIR__ . '/servicio.db');
             $this->connection = new PDO('mysql:host=localhost;dbname=redes', 'root', '', $options);
         } else {
-            $this->connection = new PDO('mysql:host=localhost;dbname=paulpvad_demo', 'paulpvad_demo', '*q#i8klNc#R5', $options);
+            $this->connection = new PDO('mysql:host=localhost;dbname=paulpvad_extremonet', 'paulpvad_extremonet', 'e01H!*m#r6Kl', $options);
         }
         $this->connection->exec("SET CHARACTER SET UTF8");
     }

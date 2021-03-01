@@ -56,7 +56,7 @@ function authorization(PDO $connection, string $module, string $action, string $
             $content = requireToVar(VIEW_PATH . '/' . '403.view.php', [
                 'message' => $res->message,
             ]);
-            require_once(VIEW_PATH . '/' . 'layouts/basic.layout.php');
+            require_once(VIEW_PATH . '/' . 'layouts/site.layout.php');
             die();
         }
     }
