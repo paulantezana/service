@@ -64,6 +64,6 @@
     </div>
 </div>
 
-<script src="<?= URL_PATH ?>/assets/script/helpers/moment.js"></script>
+<script src="<?= URL_PATH ?>/assets/script/helpers/moment-with-locales.min.js"></script>
 <script src="<?= URL_PATH ?>/assets/script/helpers/chart.min.js"></script>
 <script src="<?= URL_PATH ?>/assets/script/dashboard.js"></script>
