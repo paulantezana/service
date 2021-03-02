@@ -131,7 +131,7 @@ class ContractController extends Controller
     {
         $res = new Result();
         try {
-            authorization($this->connection, 'contract', 'eliminar');
+            authorization($this->connection, 'contract', 'anular');
             $postData = file_get_contents('php://input');
             $body = json_decode($postData, true);
 
