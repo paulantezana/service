@@ -1,6 +1,7 @@
 .Header{
     display: flex;
     justify-content: space-between;
+    height: $headerHeight;
     // background: var(--snColorBgAlt);
     // border-bottom: 1px solid var(--snColorBorder);
     // @include from(l){

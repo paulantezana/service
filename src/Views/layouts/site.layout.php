@@ -44,43 +44,53 @@
                             <div class="SiteMenu-content">
                                 <ul class="SiteMenu SnMenu" id="SiteMenu">
                                     <li itemprop="url"><a href="<?= URL_PATH ?>" target="" itemprop="name" title="Inicio">Home</a></li>
-                                    <?php if(isset($_SESSION[SESS_USER])): ?>
-                                        <li>
-                                            <div class="HeaderMenu-profile Header-action">
-                                                <div class="SnAvatar">
-                                                    <?php if ($_SESSION[SESS_USER]['avatar'] !== '') : ?>
-                                                        <img class="SnAvatar-img" src="<?= URL_PATH ?><?= $_SESSION[SESS_USER]['avatar'] ?>" alt="avatar">
-                                                    <?php else : ?>
-                                                        <div class="SnAvatar-text"><?= substr($_SESSION[SESS_USER]['user_name'], 0, 2); ?></div>
-                                                    <?php endif; ?>
-                                                </div>
-                                            </div>
-                                            <ul>
-                                                <li class="User-item SnMt-2 SnMb-2">
-                                                    <a href="<?= URL_PATH ?>/admin/user/profile" class="SnAvatar">
-                                                        <?php if ($_SESSION[SESS_USER]['avatar'] !== '') : ?>
-                                                            <img class="SnAvatar-img" src="<?= URL_PATH ?><?= $_SESSION[SESS_USER]['avatar'] ?>" alt="avatar">
-                                                        <?php else : ?>
-                                                            <div class="SnAvatar-text"><?= substr($_SESSION[SESS_USER]['user_name'], 0, 2); ?></div>
-                                                        <?php endif; ?>
-                                                    </a>
-                                                    <div>
-                                                        <div class="User-title"><strong id="userTitleInfo"><?= $_SESSION[SESS_USER]['email'] ?></strong></div>
-                                                        <div class="User-description" id="userDescriptionInfo"><?= $_SESSION[SESS_USER]['user_name'] ?></div>
-                                                    </div>
-                                                </li>
-                                                <li class="divider"></li>
-                                                <li class="SnMt-2"><a href="<?= URL_PATH ?>/user/update"><i class="fas fa-user SnMr-2"></i>Perfil</a></li>
-                                                <li><a href="<?= URL_PATH ?>/admin"><i class="fas fa-user-cog SnMr-2"></i>Admin</a></li>
-                                                <li class="SnMb-2"><a href="<?= URL_PATH ?>/user/logout"><i class="fas fa-sign-out-alt SnMr-2"></i>Cerrar sesión</a></li>
-                                            </ul>
-                                        </li>
-                                    <?php endif; ?>
                                 </ul>
                                 <div class="SnSwitch SnMl-2"><input class="SnSwitch-control" id="themeMode" type="checkbox"><label class="SnSwitch-label" for="themeMode"></label></div>
                             </div>
                         </nav>
                     </div>
+
+                    <?php if (isset($_SESSION[SESS_USER])) : ?>
+                        <ul class="UserMenu">
+                            <li>
+                                <a href="#">
+                                    <i class="far fa-bell"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div class="SnAvatar">
+                                        <?php if ($_SESSION[SESS_USER]['avatar'] !== '') : ?>
+                                            <img class="SnAvatar-img" src="<?= URL_PATH ?><?= $_SESSION[SESS_USER]['avatar'] ?>" alt="avatar">
+                                        <?php else : ?>
+                                            <div class="SnAvatar-text"><?= substr($_SESSION[SESS_USER]['user_name'], 0, 2); ?></div>
+                                        <?php endif; ?>
+                                    </div>
+                                </a>
+                                <ul>
+                                    <li class="UserMenu-profile SnMt-2 SnMb-2">
+                                        <a href="<?= URL_PATH ?>/user/update">
+                                            <div class="SnAvatar">
+                                                <?php if ($_SESSION[SESS_USER]['avatar'] !== '') : ?>
+                                                    <img class="SnAvatar-img" src="<?= URL_PATH ?><?= $_SESSION[SESS_USER]['avatar'] ?>" alt="avatar">
+                                                <?php else : ?>
+                                                    <div class="SnAvatar-text"><?= substr($_SESSION[SESS_USER]['user_name'], 0, 2); ?></div>
+                                                <?php endif; ?>
+                                            </div>
+                                            <div>
+                                                <div class="UserMenu-title"><strong id="userTitleInfo"><?= $_SESSION[SESS_USER]['email'] ?></strong></div>
+                                                <div class="UserMenu-description" id="userDescriptionInfo"><?= $_SESSION[SESS_USER]['user_name'] ?></div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li class="SnMt-2"><a href="<?= URL_PATH ?>/user/update"><i class="fas fa-user SnMr-2"></i>Perfil</a></li>
+                                    <li><a href="<?= URL_PATH ?>/admin"><i class="fas fa-user-cog SnMr-2"></i>Admin</a></li>
+                                    <li class="SnMb-2"><a href="<?= URL_PATH ?>/user/logout"><i class="fas fa-sign-out-alt SnMr-2"></i>Cerrar sesión</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    <?php endif; ?>
                 </div>
             </header>
         </div>

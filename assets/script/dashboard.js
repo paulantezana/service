@@ -75,8 +75,8 @@ function buildContractsChart(result) {
             datasets: [
                 {
                     label: "Contratos",
-                    backgroundColor: Color(chartColors.red).alpha(0.5).rgbString(),
-                    bcontractColor: chartColors.red,
+                    backgroundColor: Color(chartColors.blue).alpha(0.5).rgbString(),
+                    bcontractColor: chartColors.blue,
                     data: [...result].map((item) => ({
                         x: item.created_at_query,
                         y: item.count,
@@ -112,8 +112,8 @@ function buildPaymentChart(result) {
             datasets: [
                 {
                     label: "Pagos",
-                    backgroundColor: Color(chartColors.red).alpha(0.5).rgbString(),
-                    bcontractColor: chartColors.red,
+                    backgroundColor: Color(chartColors.blue).alpha(0.5).rgbString(),
+                    bcontractColor: chartColors.blue,
                     data: [...result].map((item) => ({
                         x: item.created_at_query,
                         y: item.count,

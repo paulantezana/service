@@ -8,17 +8,35 @@ class Payment extends Model
     }
 
 
-    public function paginate(int $page, int $limit = 20, string $search = '', int $contractId = 0)
+    public function paginate(int $page, int $limit = 20, string $search = '', int $contractId = 0, $searchStartDate = 0, $searchEndDate = 0)
     {
         try {
             $offset = ($page - 1) * $limit;
-            $totalRows = $this->db->query('SELECT COUNT(*) FROM payments')->fetchColumn();
-            $totalPages = ceil($totalRows / $limit);
-
             $aditionalQuery = '';
             if ($contractId > 0) {
-                $aditionalQuery = ' WHERE pay.contract_id = :contract_id ';
+                $aditionalQuery = ' AND pay.contract_id = :contract_id ';
             }
+
+            $stmt = $this->db->prepare("SELECT COUNT(*) as total
+                                        FROM payments AS pay
+                                        INNER JOIN contracts AS con ON pay.contract_id = con.contract_id
+                                        INNER JOIN customers AS cus ON con.customer_id = cus.customer_id
+                                        INNER JOIN users as user ON pay.user_id = user.user_id
+                                        WHERE (DATE(pay.datetime_of_issue) BETWEEN :start_date_of_issue AND :end_date_of_issue) 
+                                        AND cus.social_reason LIKE '%{$search}%' 
+                                        " . $aditionalQuery);
+            $stmt->bindParam(":start_date_of_issue", $searchStartDate);
+            $stmt->bindParam(":end_date_of_issue", $searchEndDate);
+            if ($contractId > 0) {
+                $stmt->bindParam(":contract_id", $contractId);
+            }
+            if (!$stmt->execute()) {
+                throw new Exception($stmt->errorInfo()[2]);
+            }
+
+            $totalRows = $stmt->fetch();
+            $totalPages = ceil($totalRows['total'] / $limit);
+
 
             $stmt = $this->db->prepare("SELECT pay.*,
                                             cus.document_number AS customer_document_number,
@@ -31,9 +49,13 @@ class Payment extends Model
                                         INNER JOIN contracts AS con ON pay.contract_id = con.contract_id
                                         INNER JOIN customers AS cus ON con.customer_id = cus.customer_id
                                         INNER JOIN users as user ON pay.user_id = user.user_id
+                                        WHERE (DATE(pay.datetime_of_issue) BETWEEN :start_date_of_issue AND :end_date_of_issue) 
+                                        AND cus.social_reason LIKE '%{$search}%' 
                                         ".$aditionalQuery." 
                                         ORDER BY pay.payment_id DESC
                                         LIMIT $offset, $limit");
+            $stmt->bindParam(":start_date_of_issue", $searchStartDate);
+            $stmt->bindParam(":end_date_of_issue", $searchEndDate);
             if ($contractId > 0) {
                 $stmt->bindParam(":contract_id", $contractId);
             }

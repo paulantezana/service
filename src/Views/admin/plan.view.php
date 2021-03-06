@@ -22,7 +22,7 @@
         <div class="SnCard-body">
             <div class="SnControl-wrapper SnMb-5">
                 <input type="text" class="SnForm-control SnControl" id="searchContent" placeholder="Buscar...">
-                <span class="SnControl-suffix icon-search4"></span>
+                <i class="SnControl-suffix fas fa-search"></i>
             </div>
             <div id="planTable"></div>
         </div>

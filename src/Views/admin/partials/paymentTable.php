@@ -37,7 +37,7 @@
                         <td><?= $row['to_datetime'] ?></td>
                         <td><?= $row['payment_count'] ?></td>
                         <td><?= $row['total'] ?></td>
-                        <td><span class="SnTag <?= $row['canceled'] == 0 ? 'success' : 'error' ?>"><?= $row['canceled'] == 0 ? 'activo' : 'anulado' ?></span></td>
+                        <td title="<?= $row['canceled_message'] ?>"><span class="SnTag <?= $row['canceled'] == 0 ? 'success' : 'error' ?>"><?= $row['canceled'] == 0 ? 'activo' : 'anulado' ?></span></td>
                         <td><?= $row['user_name'] ?></td>
                         <td>
                             <div class="SnTable-action">

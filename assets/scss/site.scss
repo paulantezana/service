@@ -11,21 +11,19 @@
 @include SnControl();
 @include SnMargin();
 @include SnSwitch();
-@include SnMenu(l,'.SiteMenu');
+@include SnMenu(l, ".SiteMenu");
+@include SnMenu(s, ".UserMenu");
 @include SnModal();
 @include SnMessage();
 @include SnAvatar();
 @include SnTab();
+@include SnGrid();
+@include SnDivider();
 
 $siteHeaderHeight: 56px;
 // $headerHeight: 58px;
-@import 'site/SiteLayout';
-@import 'site/SiteMenu';
-@import 'site/Login';
-@import 'global/Result';
-
-
-// .SnCard{
-//     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.052);
-//     border: none;
-// }
+@import "site/SiteLayout";
+@import "site/SiteMenu";
+@import "site/Login";
+@import "global/Result";
+@import 'global/UserMenu.scss';

@@ -57,8 +57,10 @@ class PaymentController extends Controller
             $limit = htmlspecialchars(isset($_GET['limit']) ? $_GET['limit'] : 20);
             $search = htmlspecialchars(isset($_GET['search']) ? $_GET['search'] : '');
             $contractId = htmlspecialchars(isset($_GET['contractId']) ? $_GET['contractId'] : 0);
+            $searchStartDate = htmlspecialchars(isset($_GET['searchStartDate']) ? $_GET['searchStartDate'] : 0);
+            $searchEndDate = htmlspecialchars(isset($_GET['searchEndDate']) ? $_GET['searchEndDate'] : 0);
             
-            $payment = $this->paymentModel->paginate($page, $limit, $search, $contractId);
+            $payment = $this->paymentModel->paginate($page, $limit, $search, $contractId, $searchStartDate, $searchEndDate);
 
             $res->view = $this->render('admin/partials/paymentTable.php', [
                 'payment' => $payment,
@@ -149,6 +151,7 @@ class PaymentController extends Controller
             $currentDate = date('Y-m-d H:i:s');
             $this->paymentModel->updateById($body['paymentId'], [
                 'canceled'=> 1,
+                'canceled_message'=> $body['message'],
 
                 'updated_at' => $currentDate,
                 'updated_user_id' => $_SESSION[SESS_KEY],

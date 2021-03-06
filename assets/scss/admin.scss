@@ -6,7 +6,7 @@
 @import "_base";
 
 // Components
-@include SnMenu(s,'.HeaderMenu');
+@include SnMenu(s, ".UserMenu");
 @include SnBtn();
 @include SnAlert();
 @include SnCard();
@@ -37,6 +37,7 @@
 @import 'layout/AsideMenu.scss';
 @import 'layout/Header.scss';
 @import 'layout/HeaderMenu.scss';
+@import 'global/UserMenu.scss';
 @import 'layout/SnToolbar.scss';
 
 @import 'global/SnList.scss';
@@ -72,21 +73,6 @@
         text-align: center;
         font-size: 1.2rem;
         box-shadow: none;
-    }
-}
-
-.Exhibitor{
-    @include from(l){
-        display: flex;
-    }
-    &-table{
-        flex: 1 1 auto;
-    }
-    &-map{
-        @include from(l){
-            flex: 1 1 200px;
-            margin-left: 1rem;
-        }
     }
 }
 

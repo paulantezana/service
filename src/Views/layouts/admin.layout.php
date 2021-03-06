@@ -47,77 +47,14 @@
                     <div id="AsideMenu-toggle"><i class="fas fa-bars"></i></div>
                 </div>
                 <div class="Header-right">
-                    <ul class="HeaderMenu">
+                    <ul class="UserMenu">
                         <li>
-                            <a href="#" class="Header-action">
+                            <a href="#">
                                 <i class="far fa-bell"></i>
                             </a>
-                            <ul>
-                                <li class="HeaderMenu-header">
-                                    <div>Notification <span>5</span></div>
-                                </li>
-                                <li class="Notification">
-                                    <div class="Notification-avatar SnAvatar">
-                                        <?php if ($_SESSION[SESS_USER]['avatar'] !== '') : ?>
-                                            <img class="SnAvatar-img" src="<?= URL_PATH ?><?= $_SESSION[SESS_USER]['avatar'] ?>" alt="avatar">
-                                        <?php else : ?>
-                                            <div class="SnAvatar-text"><?= substr($_SESSION[SESS_USER]['user_name'], 0, 2); ?></div>
-                                        <?php endif; ?>
-                                    </div>
-                                    <div class="Notification-body">
-                                        <p class="SnMb-2">
-                                            <strong>User name</strong>
-                                            <span> replied to your comment : "Hello world 😍"</span>
-                                        </p>
-                                        <div class="Notification-time">
-                                            <span>💬</span>
-                                            <span>Just Now</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="Notification">
-                                    <div class="Notification-avatar SnAvatar">
-                                        <?php if ($_SESSION[SESS_USER]['avatar'] !== '') : ?>
-                                            <img class="SnAvatar-img" src="<?= URL_PATH ?><?= $_SESSION[SESS_USER]['avatar'] ?>" alt="avatar">
-                                        <?php else : ?>
-                                            <div class="SnAvatar-text"><?= substr($_SESSION[SESS_USER]['user_name'], 0, 2); ?></div>
-                                        <?php endif; ?>
-                                    </div>
-                                    <div class="Notification-body">
-                                        <p class="SnMb-2">
-                                            <strong>User name</strong>
-                                            <span> replied to your comment : "Hello world 😍"</span>
-                                        </p>
-                                        <div class="Notification-time">
-                                            <span>💬</span>
-                                            <span>Just Now</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="Notification">
-                                    <div class="Notification-avatar SnAvatar">
-                                        <?php if ($_SESSION[SESS_USER]['avatar'] !== '') : ?>
-                                            <img class="SnAvatar-img" src="<?= URL_PATH ?><?= $_SESSION[SESS_USER]['avatar'] ?>" alt="avatar">
-                                        <?php else : ?>
-                                            <div class="SnAvatar-text"><?= substr($_SESSION[SESS_USER]['user_name'], 0, 2); ?></div>
-                                        <?php endif; ?>
-                                    </div>
-                                    <div class="Notification-body">
-                                        <p class="SnMb-2">
-                                            <strong>User name</strong>
-                                            <span> replied to your comment : "Hello world 😍"</span>
-                                        </p>
-                                        <div class="Notification-time">
-                                            <span>💬</span>
-                                            <span>Just Now</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="HeaderMenu-footer"><a href="#">View all</a></li>
-                            </ul>
                         </li>
                         <li>
-                            <div class="HeaderMenu-profile Header-action">
+                            <a href="#">
                                 <div class="SnAvatar">
                                     <?php if ($_SESSION[SESS_USER]['avatar'] !== '') : ?>
                                         <img class="SnAvatar-img" src="<?= URL_PATH ?><?= $_SESSION[SESS_USER]['avatar'] ?>" alt="avatar">
@@ -125,20 +62,22 @@
                                         <div class="SnAvatar-text"><?= substr($_SESSION[SESS_USER]['user_name'], 0, 2); ?></div>
                                     <?php endif; ?>
                                 </div>
-                            </div>
+                            </a>
                             <ul>
-                                <li class="User-item SnMt-2 SnMb-2">
-                                    <a href="<?= URL_PATH ?>/admin/user/profile" class="SnAvatar">
-                                        <?php if ($_SESSION[SESS_USER]['avatar'] !== '') : ?>
-                                            <img class="SnAvatar-img" src="<?= URL_PATH ?><?= $_SESSION[SESS_USER]['avatar'] ?>" alt="avatar">
-                                        <?php else : ?>
-                                            <div class="SnAvatar-text"><?= substr($_SESSION[SESS_USER]['user_name'], 0, 2); ?></div>
-                                        <?php endif; ?>
+                                <li class="UserMenu-profile SnMt-2 SnMb-2">
+                                    <a href="<?= URL_PATH ?>/user/update">
+                                        <div class="SnAvatar">
+                                            <?php if ($_SESSION[SESS_USER]['avatar'] !== '') : ?>
+                                                <img class="SnAvatar-img" src="<?= URL_PATH ?><?= $_SESSION[SESS_USER]['avatar'] ?>" alt="avatar">
+                                            <?php else : ?>
+                                                <div class="SnAvatar-text"><?= substr($_SESSION[SESS_USER]['user_name'], 0, 2); ?></div>
+                                            <?php endif; ?>
+                                        </div>
+                                        <div>
+                                            <div class="UserMenu-title"><strong id="userTitleInfo"><?= $_SESSION[SESS_USER]['email'] ?></strong></div>
+                                            <div class="UserMenu-description" id="userDescriptionInfo"><?= $_SESSION[SESS_USER]['user_name'] ?></div>
+                                        </div>
                                     </a>
-                                    <div>
-                                        <div class="User-title"><strong id="userTitleInfo"><?= $_SESSION[SESS_USER]['email'] ?></strong></div>
-                                        <div class="User-description" id="userDescriptionInfo"><?= $_SESSION[SESS_USER]['user_name'] ?></div>
-                                    </div>
                                 </li>
                                 <li class="divider"></li>
                                 <li class="SnMt-2"><a href="<?= URL_PATH ?>/user/update"><i class="fas fa-user SnMr-2"></i>Perfil</a></li>

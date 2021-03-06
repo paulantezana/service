@@ -152,17 +152,19 @@ function contractSubmit(e) {
 
 function contractCanceled(contractId, content = "") {
   SnModal.confirm({
-    title: "¿Estás seguro de anular este registro?",
-    content: `Código: ${content}`,
+    title: `¿Estás seguro de anular este registro con código: ${contractId}?`,
+    content: 'Ingrese el motivo de la anulación',
+    input: true,
     okText: "Si",
     okType: "error",
     cancelText: "No",
-    onOk() {
+    onOk(message) {
       contractSetLoading(true);
       RequestApi.fetch("/admin/contract/canceled", {
         method: "POST",
         body: {
           contractId: contractId || 0,
+          message,
         },
       })
         .then((res) => {

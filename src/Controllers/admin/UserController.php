@@ -110,62 +110,6 @@ class UserController extends Controller
         echo json_encode($res);
     }
 
-    public function updateProfile()
-    {
-        $res = new Result();
-        try {
-            $postData = file_get_contents('php://input');
-            $body = json_decode($postData, true);
-
-            $validate = $this->validateInput($body, 'updateProfile');
-            if (!$validate->success) {
-                throw new Exception($validate->message);
-            }
-
-            $currentDate = date('Y-m-d H:i:s');
-            $this->userModel->updateById($body['userId'], [
-                'email' => htmlspecialchars($body['email']),
-                'user_name' => htmlspecialchars($body['userName']),
-                'full_name' => htmlspecialchars($body['fullName']),
-
-                'updated_at' => $currentDate,
-                'updated_user_id' => $_SESSION[SESS_KEY],
-            ]);
-            $res->success = true;
-            $res->message = 'El registro se actualizo exitosamente';
-        } catch (Exception $e) {
-            $res->message = $e->getMessage();
-        }
-        echo json_encode($res);
-    }
-
-    public function updateProfilePassword()
-    {
-        $res = new Result();
-        try {
-            $postData = file_get_contents('php://input');
-            $body = json_decode($postData, true);
-
-            $validate = $this->validateInput($body, 'updatePassword');
-            if (!$validate->success) {
-                throw new Exception($validate->message);
-            }
-
-            $currentDate = date('Y-m-d H:i:s');
-            $this->userModel->updateById($body['userId'], [
-                'updated_at' => $currentDate,
-                'updated_user_id' => $_SESSION[SESS_KEY],
-
-                'password' => sha1(htmlspecialchars($body['password'])),
-            ]);
-            $res->success = true;
-            $res->message = 'El registro se actualizo exitosamente';
-        } catch (Exception $e) {
-            $res->message = $e->getMessage();
-        }
-        echo json_encode($res);
-    }
-
     public function update()
     {
         $res = new Result();
@@ -238,6 +182,87 @@ class UserController extends Controller
             $this->userModel->deleteById(htmlspecialchars($body['userId']));
             $res->success = true;
             $res->message = 'El registro se eliminó exitosamente';
+        } catch (Exception $e) {
+            $res->message = $e->getMessage();
+        }
+        echo json_encode($res);
+    }
+
+
+    public function updateProfile()
+    {
+        $res = new Result();
+        try {
+            $postData = file_get_contents('php://input');
+            $body = json_decode($postData, true);
+
+            $validate = $this->validateInput($body, 'updateProfile');
+            if (!$validate->success) {
+                throw new Exception($validate->message);
+            }
+
+            $currentDate = date('Y-m-d H:i:s');
+            $this->userModel->updateById($body['userId'], [
+                'email' => htmlspecialchars($body['email']),
+                'user_name' => htmlspecialchars($body['userName']),
+                'full_name' => htmlspecialchars($body['fullName']),
+
+                'updated_at' => $currentDate,
+                'updated_user_id' => $_SESSION[SESS_KEY],
+            ]);
+            $res->success = true;
+            $res->message = 'El registro se actualizo exitosamente';
+        } catch (Exception $e) {
+            $res->message = $e->getMessage();
+        }
+        echo json_encode($res);
+    }
+
+    public function updateProfilePassword()
+    {
+        $res = new Result();
+        try {
+            $postData = file_get_contents('php://input');
+            $body = json_decode($postData, true);
+
+            $validate = $this->validateInput($body, 'updatePassword');
+            if (!$validate->success) {
+                throw new Exception($validate->message);
+            }
+
+            $currentDate = date('Y-m-d H:i:s');
+            $this->userModel->updateById($body['userId'], [
+                'updated_at' => $currentDate,
+                'updated_user_id' => $_SESSION[SESS_KEY],
+
+                'password' => sha1(htmlspecialchars($body['password'])),
+            ]);
+            $res->success = true;
+            $res->message = 'El registro se actualizo exitosamente';
+        } catch (Exception $e) {
+            $res->message = $e->getMessage();
+        }
+        echo json_encode($res);
+    }
+
+    public function updateProfileAvatar()
+    {
+        $res = new Result();
+        try {
+            if (!isset($_FILES['avatar'])) {
+                throw new Exception('Archivo no seleccionado.');
+            }
+
+            $currentDate = date('Y-m-d H:i:s');
+            $avatarUrl = uploadAndValidateFile($_FILES['avatar'], '/upload/user/', 'user-' . $_POST['userId'], 102400, ['jpeg', 'jpg', 'png']);
+            $this->userModel->UpdateById($_POST['userId'], [
+                "updated_at" => $currentDate,
+                "updated_user_id" => $_SESSION[SESS_KEY],
+                "avatar" => $avatarUrl,
+            ]);
+
+            $res->success = true;
+            $res->message = 'La foto de perfil se subió exitosamente.';
         } catch (Exception $e) {
             $res->message = $e->getMessage();
         }

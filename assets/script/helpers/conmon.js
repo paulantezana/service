@@ -334,6 +334,20 @@ function numberToLetter(numberDecimal, uppercase, currencyId) {
     }
 }
 
+// Validate
+function validateFile(file, fielTypes, maxSizeKb) {
+    if (fielTypes.indexOf(file.type) < 0) {
+      return false;
+    }
+    let fileSize = file.size;
+    let zisekiloByte = parseInt(fileSize / 1024);
+    if (zisekiloByte > maxSizeKb) {
+      return false;
+    }
+  
+    return true;
+  }
+
 document.addEventListener('DOMContentLoaded', () => {
     SnDropdown();
 });

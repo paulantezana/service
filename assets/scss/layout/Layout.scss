@@ -28,7 +28,7 @@ $headerHeight: 56px;
       // }
     }
   &-aside{
-    background: var(--snColorBgAlt);
+    // background: var(--snColorBgAlt);
     @include to(l){
       position: fixed;
       top: 0;

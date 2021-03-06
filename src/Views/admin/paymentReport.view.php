@@ -35,9 +35,19 @@
     <?php endif; ?>
     <div class="SnCard">
         <div class="SnCard-body">
-            <div class="SnControl-wrapper SnMb-5">
-                <input type="text" class="SnForm-control SnControl" id="searchContent" placeholder="Buscar...">
-                <span class="SnControl-suffix icon-search4"></span>
+            <div class="SnControlGroup">
+                <div class="SnControl-wrapper SnControlGroup-input SnMb-5">
+                    <i class="SnControl-prefix far fa-calendar-alt"></i>
+                    <input type="date" class="SnForm-control SnControl" id="searchStartDate" onchange="paymentList()" value="<?php echo date('Y-m-d', strtotime('-1 year')) ?>">
+                </div>
+                <div class="SnControl-wrapper SnControlGroup-input SnMb-5">
+                    <i class="SnControl-prefix far fa-calendar-alt"></i>
+                    <input type="date" class="SnForm-control SnControl" id="searchEndDate" onchange="paymentList()" value="<?php echo date('Y-m-d', strtotime('+1 day')) ?>">
+                </div>
+                <div class="SnControl-wrapper SnControlGroup-input SnMb-5">
+                    <input type="text" class="SnForm-control SnControl" id="searchContent" placeholder="Buscar por cliente...">
+                    <i class="SnControl-suffix fas fa-search"></i>
+                </div>
             </div>
             <div id="paymentTable"></div>
         </div>

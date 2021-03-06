@@ -1,0 +1,73 @@
+.UserMenu {
+    // Global styles
+    height: 100%;
+    a {
+        padding-right: 12px;
+        padding-left: 12px;
+
+        text-decoration: none;
+        display: block;
+        white-space: nowrap;
+        color: var(--snColorText);
+        &:hover {
+            background: var(--snColorHover);
+        }
+    }
+
+    // Firts level
+    & > li > a {
+        display: flex;
+        align-items: center;
+        height: 100%;
+    }
+
+    // Second Level global
+    li {
+        cursor: pointer;
+        ul {
+            // position: absolute;
+            background: var(--snColorBgAlt);
+            z-index: 100;
+            box-shadow: 0 2px 16px -2px rgba(#000000, 0.1);
+            border-radius: 0.25rem;
+            min-width: 150px;
+            right: 0;
+        }
+        &.divider {
+            border-bottom: 1px solid var(--snColorBorder);
+        }
+    }
+
+    // Second level
+    ul {
+        a {
+            line-height: 34px;
+        }
+    }
+
+    // Custom CLass
+    &-header {
+        display: flex;
+        align-items: center;
+    }
+    &-profile {
+        a {
+            color: var(--snColorText);
+            display: flex;
+            align-items: center;
+            line-height: 1rem !important;
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+        }
+        .SnAvatar {
+            margin-right: 16px;
+        }
+    }
+    &-description,
+    &-title {
+        margin: 0;
+    }
+    &-description {
+        color: var(--snColorTextAlt);
+    }
+}

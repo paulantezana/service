@@ -82,4 +82,11 @@
     align-items: center;
     height: $siteHeaderHeight;
     line-height: $siteHeaderHeight;
+    &-right{
+        display: flex;
+        height: $siteHeaderHeight;
+        @include to(l){
+            flex-direction: row-reverse;
+        }
+    }
 }

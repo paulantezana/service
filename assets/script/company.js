@@ -168,16 +168,3 @@ function uploadLogoLarge() {
     SnModal.error({ title: "Error de usuario", content: 'El archivo tiene formato o tamaño incorrecto, solo se aceptan archivos con extension [image/png,image/jpeg,image/jpg]. y un tamaño maximo de 100Kb.' });
   }
 }
-
-function validateFile(file, fielTypes, maxSizeKb) {
-  if (fielTypes.indexOf(file.type) < 0) {
-    return false;
-  }
-  let fileSize = file.size;
-  let zisekiloByte = parseInt(fileSize / 1024);
-  if (zisekiloByte > maxSizeKb) {
-    return false;
-  }
-
-  return true;
-}

@@ -138,6 +138,7 @@ class ContractController extends Controller
             $currentDate = date('Y-m-d H:i:s');
             $this->contractModel->updateById($body['contractId'], [
                 'canceled'=> 1,
+                'canceled_message'=> $body['message'],
 
                 'updated_at' => $currentDate,
                 'updated_user_id' => $_SESSION[SESS_KEY],

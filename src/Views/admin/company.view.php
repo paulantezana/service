@@ -71,7 +71,7 @@
                     <label class="SnForm-label" for="businessLogo">Logotipo en formato .JPG de (320px por 320px) menos de 100 KB </label>
                     <input type="file" class="SnForm-control" id="companyLogoSquare"  accept="image/png,image/jpeg,image/jpg">
                 </div>
-                <button type="button" class="SnBtn primary block" onclick="uploadLogoSquare()">Guardar</button>
+                <button type="button" class="SnBtn primary block" onclick="uploadLogoSquare()"><i class="fas fa-cloud-upload-alt SnMr-2"></i>Guardar</button>
             </div>
             <div class="SnUpload-warapper" id="companyLogoLargeWrapper">
                 <?php if ($parameter['company']['logo_large']): ?>
@@ -83,7 +83,7 @@
                     <label class="SnForm-label" for="businessLogo">Logotipo en formato .JPG de (320px por 80px) menos de 100 KB </label>
                     <input type="file" class="SnForm-control" id="companyLogoLarge"  accept="image/png,image/jpeg,image/jpg">
                 </div>
-                <button type="button" class="SnBtn primary block" onclick="uploadLogoLarge()">Guardar</button>
+                <button type="button" class="SnBtn primary block" onclick="uploadLogoLarge()"><i class="fas fa-cloud-upload-alt SnMr-2"></i>Guardar</button>
             </div>
         </div>
     </div>
